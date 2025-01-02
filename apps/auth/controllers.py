@@ -63,7 +63,7 @@ def login():
         email = login_data.get('email')
         password = login_data.get('password')
 
-        user = User.query.filter_by(email=email).first()            
+        user = User.query.filter_by(email=email).first()
 
         if not user:
             return jsonify({'success': False, 'errorType': 'incorrectEmail'}), 401
@@ -72,14 +72,15 @@ def login():
             return jsonify({'success': False, 'errorType': 'incorrectPassword'}), 401
 
         company_id = user.company_id
-        
+
         if company_id:
             login_user(user)
+            session['company_id'] = company_id
             next_page = request.args.get('next')
             if next_page:
                 return redirect(next_page)
             return jsonify({'success': True, 'company_id': company_id})
-        
+
         login_user(user)
         next_page = request.args.get('next')
         if next_page:
@@ -87,6 +88,7 @@ def login():
         return jsonify({'success': True})
 
     return render_template('auth/login.html')
+
 
 
 @auth.route('/status', methods=['GET'])
@@ -959,14 +961,21 @@ def manage_company_admins(company_id):
 
         if company.category == 'Engineering':
             pipelines = Pipeline.query.filter_by(company_id=company_id).all()
+            return render_template(
+                'auth/general/@support_team/it_admin/admin/manage_admin.html',
+                company=company,
+                admins=pagination.items,
+                pagination=pagination,
+                roles=roles,
+                pipelines=pipelines
+            )
 
         return render_template(
             'auth/general/@support_team/it_admin/admin/manage_admin.html',
             company=company,
             admins=pagination.items,
             pagination=pagination,
-            roles=roles,
-            pipelines=pipelines
+            roles=roles
         )
     
     elif request.method == 'POST':

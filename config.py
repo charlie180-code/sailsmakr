@@ -11,6 +11,7 @@ def get_database_path(database_name="app.db"):
     home_dir = os.path.expanduser("~")
 
     documents_dir = os.path.join(home_dir, "Documents", "sailsmakr")
+    documents_dir = os.path.join(home_dir, "Documents", "Gusa")
 
     os.makedirs(documents_dir, exist_ok=True)
 
@@ -51,7 +52,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{get_database_path('app.db')}"
     PLACEHOLDER_STATIC_URL = os.environ.get('PLACEHOLDER_PRODUCTION_STATIC_URL')
     LOGIN_URL = os.environ.get('PRODUCTION_LOGIN_URL')
     SERVER_URL = os.environ.get('PRODUCTION_SERVER_URL')
