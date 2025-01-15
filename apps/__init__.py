@@ -1,4 +1,4 @@
-from flask import Flask, session, request, redirect, g
+from flask import Flask, session, request, redirect, g, render_template
 import requests
 from flask_mail import Mail
 from flask_moment import Moment
@@ -192,6 +192,34 @@ def create_app(production=True, template_folder='templates', static_folder='stat
         from .models.general.role import Role
         db.create_all()
         Role.insert_roles()
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        company_id = session.get('company_id')
+        from apps.models.general.company import Company
+        company = Company.query.get(company_id) if company_id else None
+        return render_template('errors/404.html', company=company)
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        company_id = session.get('company_id')
+        from apps.models.general.company import Company
+        company = Company.query.get(company_id) if company_id else None
+        return render_template('errors/403.html', company=company)
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        company_id = session.get('company_id')
+        from apps.models.general.company import Company
+        company = Company.query.get(company_id) if company_id else None
+        return render_template('errors/500.html', company=company)
+
+    @app.errorhandler(400)
+    def bad_request(e):
+        company_id = session.get('company_id')
+        from apps.models.general.company import Company
+        company = Company.query.get(company_id) if company_id else None
+        return render_template('errors/400.html', company=company)
 
     CORS(app)
 
