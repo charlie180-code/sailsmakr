@@ -2,7 +2,6 @@ import os
 import sys
 from apps import create_app
 from dotenv import load_dotenv
-from waitress import serve
 
 if getattr(sys, 'frozen', False):
     base_path = sys._MEIPASS
@@ -23,5 +22,9 @@ app = create_app(
     static_folder=static_folder
 )
 
-if __name__ == "__main__":
-    serve(app, host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(
+        host='0.0.0.0',
+        port=5000
+    )
+
