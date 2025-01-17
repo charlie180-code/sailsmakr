@@ -1,7 +1,7 @@
 [
     {
       "company_name": "Bombardier Transportation",
-      "company_logo": "http://127.0.0.1:5000/static/img/brand/transport_brands/bombardier-transportation.svg",
+      "company_logo": "https://sailsmakr-2stb.onrender.com/static/img/brand/transport_brands/bombardier-transportation.svg",
       "company_address": "Montreal, Canada",
       "rating": 4.5
     }

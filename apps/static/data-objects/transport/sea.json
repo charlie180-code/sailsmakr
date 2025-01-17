@@ -2,13 +2,13 @@
 
     {
       "company_name": "Royal Caribbean International",
-      "company_logo": "http://127.0.0.1:5000/static/img/brand/transport_brands/royal-caribbean-1.svg",
+      "company_logo": "https://sailsmakr-2stb.onrender.com/static/img/brand/transport_brands/royal-caribbean-1.svg",
       "company_address": "Miami, Florida, USA",
       "rating": 4.8
     },
     {
       "company_name": "MSC Mediteraneen Shipping Company",
-      "company_logo": "http://127.0.0.1:5000/static/img/brand/transport_brands/MSC.svg",
+      "company_logo": "https://sailsmakr-2stb.onrender.com/static/img/brand/transport_brands/MSC.svg",
       "company_address": "Miami, Florida, USA",
       "rating": 4.8
     }
