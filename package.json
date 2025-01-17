@@ -52,7 +52,14 @@
       "./main.js",
       "./build/icon.ico",
       "./splash.html",
-      "./logo-desktop-splash.svg"
+      "./logo-desktop-splash.svg",
+      "server/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "./server/",
+        "to": "server/"
+      }
     ],
     "directories": {
       "buildResources": "build"

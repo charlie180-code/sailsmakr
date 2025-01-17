@@ -13,4 +13,5 @@ dist
 linux-venv
 migrations
 win-venv
+server
 task.todo

@@ -1,4 +1,4 @@
-from flask import Flask, session, request, redirect, g, render_template
+from flask import Flask, session, request, redirect, g, render_template, jsonify
 import requests
 from flask_mail import Mail
 from flask_moment import Moment
@@ -18,6 +18,10 @@ from flask_cors import CORS
 from sqlalchemy import text
 import sys
 import os
+from .dlls_loader import load_dlls
+
+# Load dlls before flask initialization
+load_dlls()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -31,10 +35,10 @@ migrate = Migrate()
 babel = Babel()
 
 
-def create_app(production=True, template_folder='templates', static_folder='static'):
+def create_app(development=True, template_folder='templates', static_folder='static'):
     app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
-    app.config.from_object(config['production'])
-    config['production'].init_app(app)
+    app.config.from_object(config['development'])
+    config['development'].init_app(app)
     app.config['JSON_AS_ASCII'] = False
     bootstrap.init_app(app)
     mail.init_app(app)
@@ -220,6 +224,14 @@ def create_app(production=True, template_folder='templates', static_folder='stat
         from apps.models.general.company import Company
         company = Company.query.get(company_id) if company_id else None
         return render_template('errors/400.html', company=company)
+
+
+    @app.route('/health')
+    def health_check():
+        return jsonify(
+            {'Message' :'Hello from Sailsmakr Team, Server is good and you\'re ready to go'},
+            200
+        )
 
     CORS(app)
 

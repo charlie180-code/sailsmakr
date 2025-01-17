@@ -1,3 +1,3 @@
-const domain = 'https://sailsmakr-2stb.onrender.com'
+const domain = 'http://127.0.0.1:5000'
 
 export default domain

@@ -6,12 +6,12 @@ load_dotenv()
 def get_database_path(database_name="app.db"):
     """
     Generate a writable path for the database file based on the OS.
-    The database will be stored in the 'Documents/Gusa folder inside the user's home directory.
+    The database will be stored in the 'Documents/sailmakr folder inside the user's home directory.
     """
     home_dir = os.path.expanduser("~")
 
     documents_dir = os.path.join(home_dir, "Documents", "sailsmakr")
-    documents_dir = os.path.join(home_dir, "Documents", "Gusa")
+    documents_dir = os.path.join(home_dir, "Documents", "sailmakr")
 
     os.makedirs(documents_dir, exist_ok=True)
 
@@ -43,7 +43,10 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = f"sqlite:///{get_database_path('app.db')}"
+    SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URL')
+    PLACEHOLDER_STATIC_URL = os.environ.get('PLACEHOLDER_PRODUCTION_STATIC_URL')
+    LOGIN_URL = os.environ.get('PRODUCTION_LOGIN_URL')
+    SERVER_URL = os.environ.get('PRODUCTION_SERVER_URL')
 
 
 class TestingConfig(Config):
