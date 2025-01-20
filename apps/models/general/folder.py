@@ -15,7 +15,6 @@ class Folder(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     files = db.relationship('File', backref='folder', lazy=True)
-    tasks = db.relationship('Task', backref='folder', lazy=True)
 
     # Logistics-specific fields
     transport = db.Column(db.String)
