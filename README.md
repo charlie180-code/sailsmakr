@@ -18,41 +18,6 @@
 
 ---
 
-## Videos
-
-### Agent Use Registration Process
-![agent-use-registration-process](https://github.com/charlie180-code/sailsmakr/blob/main/screenshots/agent-use-registration-process.webm)
-[View Code for Agent Use Registration Process](https://github.com/charlie180-code/sailsmakr/blob/main/apps/auth/controllers.py)
-
-### Archiving System with Error Handling
-![archiving-system-with-error](https://example.com/path-to-your-video/archiving-system-with-error.webm)
-[View Code for Archiving System](https://github.com/your-repo/archiving-system-with-error)
-
-### Basic Folder & Files Search
-![basic-folder-files-search](https://example.com/path-to-your-video/basic-folder-files-search.webm)
-[View Code for Basic Search](https://github.com/your-repo/basic-folder-files-search)
-
-### Employee Infos Updating
-![employee-infos-updating](https://example.com/path-to-your-video/employee-infos-updating.webm)
-[View Code for Employee Infos Updating](https://github.com/your-repo/employee-infos-updating)
-
-### Invoice File Generation
-![invoice-file-generation](https://example.com/path-to-your-video/invoice-file-generation.webm)
-[View Code for Invoice File Generation](https://github.com/your-repo/invoice-file-generation)
-
-### Sailsmakr Integration - Login Page
-![sailsmakr-integration-login-page](https://example.com/path-to-your-image/sailsmakr-integration-login-page.png)
-[View Code for Login Page](https://github.com/your-repo/sailsmakr-integration-login-page)
-
-### Sailsmakr Integration - Sales Statistics
-![sailsmakr-integration-sales-statistics](https://example.com/path-to-your-image/sailsmakr-integration-sales-statistics.png)
-[View Code for Sales Statistics](https://github.com/your-repo/sailsmakr-integration-sales-statistics)
-
-### Student Enrollment Workflow (Sailsmakr)
-![student-enrollment-workflow](https://example.com/path-to-your-video/student-enrollment-workflow.webm)
-[View Code for Student Enrollment](https://github.com/your-repo/student-enrollment-workflow)
-
----
 
 ## Technologies
 
