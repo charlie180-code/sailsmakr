@@ -4,7 +4,7 @@ import os
 
 
 binaries=[
-    ('libs/*.dll', 'libs')
+    ('./apps/libs/*.dll', 'libs')
 ]
 
 datas = [
@@ -44,6 +44,6 @@ exe = EXE(
     debug=False,
     strip=False,
     upx=True,
-    console=True,
+    console=False,
     icon='./build/icon.ico'
 )

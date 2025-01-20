@@ -18,10 +18,6 @@ from flask_cors import CORS
 from sqlalchemy import text
 import sys
 import os
-from .dlls_loader import load_dlls
-
-# Load dlls before flask initialization
-load_dlls()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'

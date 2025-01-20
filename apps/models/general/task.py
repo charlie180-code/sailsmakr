@@ -13,7 +13,6 @@ class Task(db.Model):
     # Foreign Key to User
     assigned_to = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    folder_id = db.Column(db.Integer, db.ForeignKey('folders.id'))
 
     def __init__(self, title, company_id, assigned_to=None, description=None, status=False):
         self.title = title
@@ -21,4 +20,3 @@ class Task(db.Model):
         self.assigned_to = assigned_to
         self.description = description
         self.status = status
-        self.folder_id = folder_id
