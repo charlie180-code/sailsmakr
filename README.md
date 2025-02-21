@@ -225,9 +225,13 @@ Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery
 
 ## Key Links
 
-- [Dockerfile](https://github.com/charlie180-code/sailsmakr/tree/main/apps)
+- [Main Dockerfile](https://github.com/charlie180-code/sailsmakr/blob/main/Dockerfile)
+- [Docker Compose](https://github.com/charlie180-code/sailsmakr/blob/main/docker-compose.yml)
 - [Nginx Configuration](https://github.com/charlie180-code/sailsmakr/tree/main/nginx)
 - [Backend Code](https://github.com/charlie180-code/sailsmakr/tree/main/apps)
+- [Main App Entry](https://github.com/charlie180-code/sailsmakr/blob/main/apps/__init__.py)
+- [Models](https://github.com/charlie180-code/sailsmakr/tree/main/apps/models)
+- [Configurations file](https://github.com/charlie180-code/sailsmakr/blob/main/config.py)
 - [Frontend Code](https://github.com/charlie180-code/sailsmakr/tree/main/apps/static)
 
 ---
