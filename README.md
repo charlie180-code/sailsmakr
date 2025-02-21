@@ -24,7 +24,6 @@
 Sailsmakr leverages a variety of modern technologies to deliver a seamless experience:
 
 - **Python (Flask)**: Backend framework for handling requests and API logic.
-- **Code as Infrastructure**: Ensuring that infrastructure is defined and maintained programmatically using tools such as Terraform.
 - **Firestore**: Cloud-based NoSQL database for storing user-generated data such as files and media.
 - **Neon DB (PostgreSQL)**: High-performance, secure PostgreSQL database for structured data management.
 - **VanillaJS & ES6**: JavaScript standard used for building interactive front-end functionalities.
@@ -75,7 +74,7 @@ To run Sailsmakr locally, ensure you have the following tools installed:
       ```bash
       python3 -m venv venv
       source venv/bin/activate
-      pip install -r requirements.txt
+      pip install -r requirements/common.txt
       ```
 
 3. **Set Up the Frontend**:
@@ -89,7 +88,8 @@ To run Sailsmakr locally, ensure you have the following tools installed:
 
 ## Code Infrastructure
 
-Sailsmakr's backend is powered by **Flask**, which handles API requests and core business logic. Infrastructure is managed programmatically with Terraform, ensuring consistency and scalability.
+Sailsmakr's backend is  **mainly** powered by **Flask**, which handles API requests and core business logic. We're trying
+to use the most of each framework and programming languages not just python and or flask.
 
 ---
 
@@ -148,12 +148,115 @@ Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery
 
 ---
 
+## Code Infrastructure
+This will give you a brief idea of the source code
+
+```plaintext
+📂 sailsmakr
+├── 📁 apps
+│   ├── 📁 accounting
+│   ├── 📁 ads
+│   ├── 📁 ai
+│   ├── 📁 api
+│   ├── 📁 archive
+│   ├── 📁 auth
+│   ├── 📁 blog
+│   ├── 📁 career
+│   ├── 📁 classroom
+│   ├── 📁 calendar
+│   ├── 📁 insights
+│   ├── 📁 ordering
+│   ├── 📁 promotion
+│   ├── 📁 reseller
+│   ├── 📁 sessions
+│   ├── 📁 user
+│   ├── 📁 wallet
+│   ├── docker-compose.yml
+│   ├── __init__.py
+│   ├── utils.py
+│   ├── decorators.py
+│   ├── filters.py
+│   ├── task.py
+│   ├── messages.pot
+│   ├── babel.cfg
+│   ├── tailwind.config.js
+├── 📁 apps/templates
+│   ├── 📁 api
+│   ├── 📁 auth
+│   ├── 📁 dashboard
+│   ├── 📁 emails
+│   ├── 📁 errors
+│   ├── 📁 includes
+│   ├── 📁 main
+│   ├── 📁 reports
+│   ├── 📁 views
+│   ├── __init__.py
+├── 📁 apps/templates/views
+│   ├── 📁 empty
+│   ├── 📁 engineering
+│   ├── 📁 errors
+│   ├── 📁 general
+│   ├── 📁 hospital
+│   ├── 📁 sailsmakr
+│   ├── 📁 school
+│   ├── 📁 shipping
+│   ├── splash.html
+│   ├── main.js
+│   ├── preload.js
+├── 📁 server
+│   ├── nginx.conf (Web Server Config)
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── render.yaml
+│   ├── sails.spec
+├── 📁 build
+├── 📁 dist
+├── 📁 migrations
+├── 📁 linux-venv
+├── 📁 win-venv
+├── CODE_OF_CONDUCT.md
+├── contributing.md
+├── config.py (Configuration Settings)
+├── docker-compose.yml
+├── Dockerfile (Container Config)
+├── instance
+├── run.py (Main Entry Point)
+├── setup.sh
+├── build.sh
+├── installer.nsh
+├── README.md
+├── documentation.txt
+├── logo-desktop-splash.svg
+
+```
+---
+
+## Key Links
+
+- [Dockerfile](https://github.com/charlie180-code/sailsmakr/tree/main/apps)
+- [Nginx Configuration](https://github.com/charlie180-code/sailsmakr/tree/main/nginx)
+- [Backend Code](https://github.com/charlie180-code/sailsmakr/tree/main/apps)
+- [Frontend Code](https://github.com/charlie180-code/sailsmakr/tree/main/apps/static)
+
+---
+
+## Demo Videos
+
+- [Demo 1: Inviting other company members](https://drive.google.com/file/d/1whSC-cLStOcRrl8bqqeKta9Nwpl_JEGT/view?usp=sharing)
+- [Demo 2: Archiving system with error](https://drive.google.com/file/d/1p7SjoqDPwo8PyFm6fgy97L8hQu6PJ45q/view?usp=sharing)
+- [Demo 3: Basic folder files search](https://drive.google.com/file/d/1UifxNJffOr-EriG4bDGdHsZaBjqJns1H/view?usp=sharing)
+- [Demo 4: Employee infos updating](https://drive.google.com/file/d/1ziSB5M_mAo95Wxn_YsMYTZPweY2WmXhB/view?usp=sharing)
+- [Demo 5: Invoice generation](https://drive.google.com/file/d/1vgKVsiO8zecIma0iYMzCk819vmyyCVC2/view?usp=sharing)
+- [Demo 6: Student Enrollment Workflow](https://drive.google.com/file/d/1O7cl_BQuN1N6uLCEDy5dGeA-iUwaykTI/view?usp=sharing)
+
+---
+
 ## APIs and Integrations
 
 Sailsmakr integrates several third-party APIs to enhance functionality:
 
 - **OpenCage**: Geolocation API that converts geographic coordinates into human-readable addresses, useful for location-based features.
-- **FedEx & Freightos**: APIs for providing real-time shipping rates, tracking information, and freight suggestions, ensuring that customers get the best shipping options.
+
 
 ---
 
@@ -163,11 +266,29 @@ Sailsmakr uses **Jenkins** for continuous integration and automated testing. Thi
 
 ---
 
+## Roadmap
+
+- **Code as Infrastructure (IaC)**: Ensuring that infrastructure is defined and maintained programmatically using tools such as **Terraform** for provsionning infrastucture and **Ansible** for configuring this infrastructure.
+- **Kubernetes (K8s)**: We have so many microservices that needs to be scaled with kubernetes
+- **NodeJS and Express**: for some features like task management we will add create a separate NodeJS microservice due to its asynchronous nature and easy integration.
+- **MongoDB**: Document oriented database in order to deal with some type of data
+- **AI & Machine Learning**: AI email writing assitant based on industry
+- **Single User platform**: User can have a place to manage their works, sync their files, folders trough our Cloud and AI tools
+- **Spotify & Netflix**: We will integrate major music and movies streaming providers to allow some user to relax while they're working
+- **Audiobooks & tools**: we will add a suggestion system that can showcase products based on user job & responsabilities
+- **Social Networking App**: Users from different companies can connect with each other
+- **FedEx & Freightos**: APIs for providing real-time shipping rates, tracking information, and freight suggestions, ensuring that customers get the best shipping options.
+
+---
+
 ## License
 
-Sailsmakr Softwares is the sole owner of all source code. No code may be redistributed or reproduced without explicit permission from Sailsmakr Softwares.
+Bytesprint Robotics is the sole owner of all source code. No code may be redistributed or reproduced without explicit permission from Bytesprint Robotics.
 
 ---
 
 **This README.md provides comprehensive documentation for the Sailsmakr project, detailing its technology stack, setup process, and contribution guidelines.*
+
+**Bytesprint Robotics LLC**
+> **Navigating complexities for the Advancement of Human Species.*
 
