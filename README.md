@@ -107,45 +107,12 @@ Firestore is used for handling unstructured data like files, media uploads, and 
 
 Sailsmakr runs on **Render Cloud**, providing seamless hosting and scaling capabilities. All components are containerized using **Docker**, ensuring consistency across development and production environments.
 
-## Code Infrastructure
-
-Sailsmakr's backend is powered by **Flask**, which handles API requests and core business logic. Infrastructure is managed programmatically with Terraform, ensuring consistency and scalability.
-
----
-
-## Database Management
-
-### Neon DB (PostgreSQL)
-
-Sailsmakr uses Neon DB for managing structured data in a relational format:
-- **ACID-compliant Database**: Ensures data reliability, integrity, and consistency.
-- **Scalability**: Handles large-scale transactional queries and ensures data integrity.
-
-### Firestore (NoSQL)
-
-Firestore is used for handling unstructured data like files, media uploads, and logs:
-- **Real-time Updates**: Facilitates instant data synchronization.
-- **Scalability**: Easily scales with application demands.
-
----
-
-## Front-End Development
-
-Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery to deliver a dynamic and responsive user experience. The UI is styled using **TailwindCSS** and **Bootstrap MD from Creative TIM**.
-
-### Front-End Libraries and Frameworks:
-- **TailwindCSS**: Utility-first CSS framework for creating responsive designs quickly.
-- **Bootstrap MD**: Material Design components from Creative TIM for modern UI.
-- **VanillaJS (ES6)**: Core JavaScript standard for interactive components.
-- **JQuery**: Simplifies DOM manipulation and event handling.
-
 ---
 
 ## Code Infrastructure
 
 Sailsmakr's backend is  **mainly** powered by **Flask**, which handles API requests and core business logic. We're trying
 to use the most of each framework and programming languages not just python and or flask.
-
 
 ```plaintext
 📂 sailsmakr
@@ -225,6 +192,35 @@ to use the most of each framework and programming languages not just python and 
 ├── logo-desktop-splash.svg
 
 ```
+
+---
+
+## Database Management
+
+### Neon DB (PostgreSQL)
+
+Sailsmakr uses Neon DB for managing structured data in a relational format:
+- **ACID-compliant Database**: Ensures data reliability, integrity, and consistency.
+- **Scalability**: Handles large-scale transactional queries and ensures data integrity.
+
+### Firestore (NoSQL)
+
+Firestore is used for handling unstructured data like files, media uploads, and logs:
+- **Real-time Updates**: Facilitates instant data synchronization.
+- **Scalability**: Easily scales with application demands.
+
+---
+
+## Front-End Development
+
+Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery to deliver a dynamic and responsive user experience. The UI is styled using **TailwindCSS** and **Bootstrap MD from Creative TIM**.
+
+### Front-End Libraries and Frameworks:
+- **TailwindCSS**: Utility-first CSS framework for creating responsive designs quickly.
+- **Bootstrap MD**: Material Design components from Creative TIM for modern UI.
+- **VanillaJS (ES6)**: Core JavaScript standard for interactive components.
+- **JQuery**: Simplifies DOM manipulation and event handling.
+
 ---
 
 ## Key Links
