@@ -84,11 +84,6 @@ To run Sailsmakr locally, ensure you have the following tools installed:
 4. **Set Up Environment Variables**:
     - Create a `.env` file and add the necessary environment variables, such as API keys for OpenCage, FedEx, Freightos, and database credentials.
 
-## Code Infrastructure
-
-Sailsmakr's backend is  **mainly** powered by **Flask**, which handles API requests and core business logic. We're trying
-to use the most of each framework and programming languages not just python and or flask.
-
 ---
 
 ## Database Management
@@ -147,7 +142,10 @@ Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery
 ---
 
 ## Code Infrastructure
-This will give you a brief idea of the source code
+
+Sailsmakr's backend is  **mainly** powered by **Flask**, which handles API requests and core business logic. We're trying
+to use the most of each framework and programming languages not just python and or flask.
+
 
 ```plaintext
 📂 sailsmakr
