@@ -135,7 +135,7 @@ to use the most of each framework and programming languages not just python and 
 │   ├── 📁 user
 │   ├── 📁 wallet
 │   ├── docker-compose.yml
-│   ├── __init__.py
+│   ├── __init__.py(Main Entry Point)
 │   ├── utils.py
 │   ├── decorators.py
 │   ├── filters.py
@@ -183,7 +183,7 @@ to use the most of each framework and programming languages not just python and 
 ├── docker-compose.yml
 ├── Dockerfile (Container Config)
 ├── instance
-├── run.py (Main Entry Point)
+├── run.py
 ├── setup.sh
 ├── build.sh
 ├── installer.nsh
