@@ -234,6 +234,7 @@ Sailsmakr's front-end is built using a combination of VanillaJS, ES6, and JQuery
 - [Configurations file](https://github.com/charlie180-code/sailsmakr/blob/main/config.py)
 - [Frontend Code](https://github.com/charlie180-code/sailsmakr/tree/main/apps/static)
 - [Basic Minimal Guide](https://github.com/charlie180-code/sailsmakr/blob/main/documentation.txt)
+- [Contributions Guide](https://github.com/charlie180-code/sailsmakr/blob/main/contributing.md)
 
 ---
 
