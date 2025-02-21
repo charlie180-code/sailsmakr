@@ -31,7 +31,6 @@ Sailsmakr leverages a variety of modern technologies to deliver a seamless exper
 - **TailwindCSS**: Utility-first CSS framework used for building responsive and modern UI components.
 - **Bootstrap MD from Creative TIM**: Material design-based UI kit for building beautiful, functional user interfaces.
 - **Docker**: Containerization platform for packaging the application and its dependencies to run consistently across environments.
-- **Jenkins**: CI/CD tool used for automated testing and continuous integration.
 - **Render Cloud**: Cloud platform for hosting and scaling the application.
 - **OpenCage**: Geolocation API for converting coordinates into readable addresses.
 - **FedEx & Freightos APIs**: Used for providing real-time shipping and freight suggestions.
@@ -58,8 +57,7 @@ To run Sailsmakr locally, ensure you have the following tools installed:
 
 - **Docker**: For running the application in a containerized environment.
 - **Python 3.x**: For the backend.
-- **Node.js & npm**: For managing frontend dependencies and build tools.
-- **Jenkins**: If you plan to set up continuous integration and testing locally.
+- **NPM**: For managing frontend dependencies and build tools.
 
 ### Installation
 
@@ -262,14 +260,15 @@ Sailsmakr integrates several third-party APIs to enhance functionality:
 
 ## Testing and CI/CD
 
-Sailsmakr uses **Jenkins** for continuous integration and automated testing. This ensures that code pushed to the repository is automatically tested, and builds are generated for deployment.
+Sailsmakr plans to use **Jenkins** for continuous integration and automated testing. This ensures that code pushed to the repository is automatically tested, and builds are generated for deployment.
 
 ---
 
 ## Roadmap
 
 - **Code as Infrastructure (IaC)**: Ensuring that infrastructure is defined and maintained programmatically using tools such as **Terraform** for provsionning infrastucture and **Ansible** for configuring this infrastructure.
-- **Kubernetes (K8s)**: We have so many microservices that needs to be scaled with kubernetes
+- **Kubernetes (K8s)**: We have so many microservices that needs to be scaled with kubernetes.
+- **Jenkins**: CI/CD tool used for automated testing and continuous integration.
 - **NodeJS and Express**: for some features like task management we will add create a separate NodeJS microservice due to its asynchronous nature and easy integration.
 - **MongoDB**: Document oriented database in order to deal with some type of data
 - **AI & Machine Learning**: AI email writing assitant based on industry
