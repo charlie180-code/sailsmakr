@@ -230,5 +230,3 @@ def create_app(production=True, template_folder='templates', static_folder='stat
         )
 
     CORS(app)
-
-    return app

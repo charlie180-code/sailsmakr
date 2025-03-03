@@ -54,4 +54,3 @@ class Folder(db.Model):
     biosafety_level = db.Column(db.Integer)  # Biosafety level of the lab
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
