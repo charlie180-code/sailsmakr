@@ -282,4 +282,6 @@ Sailsmakr plans to use **Jenkins** for continuous integration and automated test
 
 **This README.md provides comprehensive documentation for the Sailsmakr project, detailing its technology stack, setup process, and contribution guidelines.*
 
+**Bytesprint Robotics LLC**
+> **Navigating complexities for the Advancement of Human Species.*
 
