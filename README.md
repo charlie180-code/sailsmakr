@@ -280,14 +280,6 @@ Sailsmakr plans to use **Jenkins** for continuous integration and automated test
 
 ---
 
-## License
-
-Bytesprint Robotics is the sole owner of all source code. No code may be redistributed or reproduced without explicit permission from Bytesprint Robotics.
-
----
-
 **This README.md provides comprehensive documentation for the Sailsmakr project, detailing its technology stack, setup process, and contribution guidelines.*
 
-**Bytesprint Robotics LLC**
-> **Navigating complexities for the Advancement of Human Species.*
 
