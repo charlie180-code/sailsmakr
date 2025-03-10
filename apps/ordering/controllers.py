@@ -1,8 +1,8 @@
-from flask import render_template, jsonify, request, abort
+from flask import render_template, jsonify, request, abort, flash, redirect, url_for, send_file, make_response
+from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from ..models.shipping.purchase import Purchase
 from ..models.shipping.authorization import Authorization
-from ..models.general.invoice import Invoice
 from ..models.general.company import Company
 from ..utils import save_files, generate_qr_code
 import secrets
@@ -10,8 +10,13 @@ from ..utils import save_product_pictures, save_docs, generate_barcode
 from datetime import datetime
 from .. import db
 from . import order
+import os
 from ..decorators import customer_required, agent_required
 from flask_babel import gettext as _
+from weasyprint import HTML
+from datetime import datetime
+import json
+import io
 
 @order.route("/my_purchases/previous_purchase_requests/<int:company_id>")
 @login_required
@@ -58,9 +63,16 @@ def previous_quotes(company_id):
 @login_required
 @agent_required
 def new_quotes(company_id):
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
     company = Company.query.get_or_404(company_id)
-    quotes = Authorization.query.filter_by(company_id=company.id).all()
-    return render_template("dashboard/@support_team/quotes_list.html", quotes=quotes, company=company)
+    pagination = Authorization.query.filter_by(company_id=company.id).paginate(page=page, per_page=per_page)
+    return render_template(
+        "dashboard/@support_team/quotes_list.html", 
+        quotes=pagination.items, 
+        pagination=pagination, 
+        company=company
+    )
 
 
 @order.route("/new_purchases/<int:company_id>")
@@ -117,7 +129,6 @@ def apply_quotes(company_id):
                 company_id=company.id
             )
 
-            # Save to database
             db.session.add(new_authorization)
             db.session.commit()
 
@@ -322,4 +333,79 @@ def edit_quote(quote_id):
     db.session.commit()
     return jsonify({'success': True})
 
-    
+@order.route('/create_new_container_release_letter', methods=['POST'])
+@login_required
+def create_container_letter():
+    try:
+        data = request.form
+
+        authorization = Authorization(
+            client_first_name=data["client_first_name"],
+            client_last_name=data["client_last_name"],
+            client_phone_number=data["client_phone_number"],
+            client_email_address=data.get("client_email_address"),
+            client_location=data["client_location"],
+            agent_first_name=data["agent_first_name"],
+            agent_last_name=data["agent_last_name"],
+            agent_email_address=data.get("agent_email_address"),
+            shipping_company_title=data["shipping_company"],
+            lading_bills_identifier=data["bills_of_ladding"],
+            company_id=data["company_id"]
+        )
+
+        db.session.add(authorization)
+        db.session.commit()
+        
+        current_date = datetime.today().strftime("%d/%m/%Y")
+
+        html_content = render_template(
+            "reports/shipping/container_release_letter_msc.html", 
+            data=data, 
+            date=current_date
+        )
+
+        pdf_stream = io.BytesIO()
+        HTML(string=html_content).write_pdf(pdf_stream)
+        pdf_stream.seek(0)
+
+        pdf_filename = f"{authorization.client_first_name}_{authorization.client_last_name}_N°_{authorization.id}.pdf"
+
+        response_data = {
+            "success": True,
+            "title": f"Demande N°{authorization.id} créee!",
+            "message": "La nouvelle demande a bien été créee!",
+            "confirmButtonText": "OK",
+            "pdf_filename": pdf_filename
+        }
+
+        json_data = json.dumps(response_data)
+        json_data = json_data.replace('\n', '').replace('\r', '')
+
+        response = make_response(pdf_stream.getvalue())
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename={pdf_filename}'
+        response.headers['X-JSON-Data'] = json_data
+        return response
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"success": False, "message": str(e)}), 500
+
+@order.route("/prepare_send_container_release_letter/<int:quote_id>/<int:company_id>", methods=["GET", "POST"])
+def prepare_send_container_release_letter(quote_id, company_id):
+    company = Company.query.get_or_404(company_id)
+    quote = Authorization.query.get_or_404(quote_id)
+    if request.method == "POST":
+        client_name = request.form.get("client_name")
+        agent_name = request.form.get("agent_name")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
+
+        flash("Email prepared successfully!", "success")
+        return redirect(url_for("prepare_send_container_release_letter", quote_id=quote_id))
+
+    return render_template(
+        "dashboard/@support_team/shipping/prepare_container_release_email.html", 
+        quote=quote,
+        company=company
+    )
