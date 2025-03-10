@@ -1,0 +1,105 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block title %}
+    <title>{{ _('Demandes de procurations : Sailsmakr') }}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="my-2 d-flex align-items-center justify-content-between">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+                    <li class="breadcrumb-item">
+                        <a class="link-body-emphasis" href="#">
+                            <i class="bi bi-house-door-fill"></i>
+                            <span class="visually-hidden">{{ _('Accueil') }}</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">{{ _('Préparer l\'envoi de la demande') }}</li>
+                </ol>
+            </nav>
+        </div>
+        
+        <h2>
+            <span>
+                {{ _('Autorisation d\'enlèvement du BL N°') }} {{ quote.lading_bills_identifier }}
+            </span>
+        </h2>
+
+        <form action="{{ url_for('order.prepare_send_container_release_letter', quote_id=quote.id, company_id=company.id) }}" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ _('A') }}
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="contact-selector">
+                        <input type="text" id="contact-input" list="contact-list" class="form-control" placeholder="{{ _('Recherchez des contacts') }}" />
+                        <datalist id="contact-list"></datalist>
+                        <div id="selected-contacts" class="badge-container"></div>
+                    </div>
+                    <div class="my-2 text-danger" id="" style="display: none;">
+                        {{ _('Ce champ est requis pour continuer') }} 
+                    </div>                                        
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ _('Cc') }} 
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="contact-selector">
+                        <input type="text" id="contact-input" list="contact-list" class="form-control" />
+                        <datalist id="contact-list"></datalist>
+                        <div id="selected-contacts" class="badge-container"></div>
+                    </div>
+                    <div class="my-2 text-danger" id="" style="display: none;">
+                        {{ _('Ce champ est requis pour continuer') }} 
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">
+                        {{ _('Objet') }} 
+                        <span class="text-danger">*</span>
+                    </label>
+                    <input type="text" class="form-control" value="{{ _('Autorisation d\'enlèvement du BL N°') }} {{ quote.lading_bills_identifier }}">
+                    
+                    <div class="my-2 text-danger" id="" style="display: none;">
+                        {{ _('Ce champ est requis pour continuer') }} 
+                    </div>
+                </div>
+            </div>
+
+
+            
+            <div class="row">
+                <div class="mb-3">
+                    <label class="form-label">{{ _('Message') }}<span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="" id="" cols="30" rows="10">
+                        {{  _('Bonjour Mr Serge, ') }} {{ _('Veuillez recevoir en pièces jointes le BL N°') }} {{ quote.lading_bills_identifier }} {{ _('du client') }} {{ quote.client_last_name }} {{ quote.client_first_name }}
+                    </textarea>
+                    <div class="my-2 text-danger" id="" style="display: none;">
+                        {{ _('Ce champ est requis pour continuer') }} 
+                    </div>                                        
+                </div>
+            </div>
+
+            <div class="my-5">
+                <button type="button" id="SubmitButton" class="btn btn-info">
+                    <div class="spinner-border spinner-border-sm" id="Spinner" style="display: none;"></div>
+                    <span id="LoadingText" style="display: none;">{{ _('En cours') }}</span>
+                    <i class="bi bi-send-fill" id="ButtonIcon"></i> 
+                    {{ _('Envoyer') }}
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock %}
