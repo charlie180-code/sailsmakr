@@ -47,6 +47,10 @@ def programmed_messages():
 @msg.route("/mailbox/contacts/<int:company_id>")
 @login_required
 def get_contacts(company_id):
+    
+    # here we can trigger a javascript function that will
+    # this function will work on input so 
+    
     company = Company.query.get_or_404(company_id)
     users = User.query.filter_by(company_id=company.id).all()
     contacts = []
@@ -253,4 +257,6 @@ def create_contact(company_id):
             return jsonify({'message': str(e)}), 500
 
     return render_template('api/customers/contacts/create_contact.html', company=company)
+
+
 
