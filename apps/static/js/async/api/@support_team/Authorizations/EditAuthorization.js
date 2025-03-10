@@ -1,4 +1,4 @@
-import UtilApiURLs from "../../../../_globals/UtilApiUrls.js";
+import UtilApiURLs from "../../../../_globals/shipping/Purchase.js";
 
 const URL = UtilApiURLs.checkValidityQuoteURL
 
