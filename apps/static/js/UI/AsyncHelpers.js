@@ -49,7 +49,10 @@ export async function sendDataToAPI(
     let isValid = true;
 
     fields.forEach(field => {
-        const errorText = field.parentElement.querySelector('.error-text');
+        const errorText = document.getElementById(field.id + "Error");
+        if (!errorText) {
+            console.warn(`No error message div found for: ${field.id}`);
+        }
         isValid = isValid && validateField(field, errorText, validateFn);
     });
 
