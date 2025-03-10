@@ -7,9 +7,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const roleName = document.getElementById('NewAgentRole').value;
         const position = document.getElementById('NewAgentposition').value;
         const roleId = document.querySelector(`#roleNames option[value="${roleName}"]`).getAttribute('data-role-id');
-        const station = document.getElementById("NewAgentStation").value;
+        
+        const StationElement = document.getElementById("NewAgentStation")
+        const station = null
+        
+        if(StationElement){
+            const station = document.getElementById("NewAgentStation").value;
+        }
 
-        console.log(roleId)
 
         if (!adminName || adminName.length > 64) {
             document.getElementById('FirstNameLengthError').classList.remove('d-none');
