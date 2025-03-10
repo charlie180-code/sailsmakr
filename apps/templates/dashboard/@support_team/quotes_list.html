@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="my-5">
+    <div class="my-5 d-flex align-items-center justify-content-between">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                 <li class="breadcrumb-item">
@@ -18,19 +18,29 @@
                 <li class="breadcrumb-item active">{{ _('Demandes de procurations') }}</li>
             </ol>
         </nav>
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createNewLetter" title="{{ _('Ajouter un nouvel administrateur') }}">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
     </div>
     
     <h2>
-        <span class="ms-3">{{ _('Nouvelles requêtes') }}</span>
+        <span>{{ _('Nouvelles requêtes') }}</span>
     </h2>
+
+    <div class="mb-3">
+        <label for="bills-search" class="form-label">{{ _('Taper un Client, Transitaire, N° BL...') }}</label>
+        <input type="text" class="form-control" id="bills-search" oninput="filterQuotes()" placeholder="{{ _('Taper un Client, Transitaire, N° BL...') }}">
+    </div>
 
     {% if quotes %}
         <table class="table align-middle mb-0 bg-white">
             <thead class="bg-light">
                 <tr>
                     <th>{{ _('ID') }}</th>
-                    <th>{{ _('Nom du client') }}</th>
-                    <th>{{ _('Titre de la compagnie de transport') }}</th>
+                    <th>{{ _('Client') }}</th>
+                    <th>{{ _('Compagnie') }}</th>
                     <th>{{ _('Options') }}</th>
                 </tr>
             </thead>
@@ -38,7 +48,7 @@
                 {% for quote in quotes %}
                     <tr>
                         <td>{{ quote.id }}</td>
-                        <td>{{ quote.client_first_name }} {{ quote.client_last_name }}</td>
+                        <td >{{ quote.client_first_name }} {{ quote.client_last_name }}</td>
                         <td>{{ quote.shipping_company_title }}</td>
                         <td>
                             <div class="dropdown">
@@ -52,9 +62,15 @@
                                     <li>
                                         <button type="button" data-quote-id="{{ quote.id }}" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editQuoteModal{{ quote.id }}">{{ _('Modifier') }}</button>
                                     </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url_for('order.prepare_send_container_release_letter', quote_id=quote.id, company_id=company.id) }}">
+                                            <i class="bi bi-send me-2"></i>
+                                            {{ _('Envoyer') }}
+                                        </a>
+                                    </li>
                                     <hr class="dropdown-divider">
                                     <li>
-                                        <button type="button" data-quote-id="{{ quote.id }}" class="dropdown-item delete-btn">
+                                        <button type="button" data-quote-id="{{ quote.id }}" class="dropdown-item text-danger delete-btn">
                                             <i class="bi bi-trash"></i> {{ _('Supprimer') }}
                                         </button>
                                     </li>
@@ -169,9 +185,257 @@
         {% else %}
           {% include 'dashboard/@support_team/empty/no_quote.html' %}
         {% endif %}
-        <script type="module" src="{{ url_for('static', filename='js/async/api/@support_team/Authorizations/EditAuthorization.js') }}"></script>
-    <script type="module" src="{{ url_for('static', filename='js/async/api/@support_team/Authorizations/DeleteAuthorization.js') }}"></script>
+            <div class="modal fade" id="createNewLetter" tabindex="-1" aria-labelledby="createNewLetterModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createNewLetterLabel">{{ _('Créer une nouvelle demande') }}</h5>
+                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createLetterForm" method="POST">
+                                <input type="hidden" name="company_id" value="{{ company.id }}">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Nom du Client') }}<span class="text-danger">*</span></label>
+                                        <!-- Here fetch authorization data from the database to help the user
+                                            IF POSSIBLE DO IT EVERYWHERE to speed up the process 
+                                        -->
+                                        <input type="text" class="form-control" id="clientLastName" name="client_last_name" placeholder="{{ _('Doe') }}" required>
+                                        <div class="my-2 text-danger" id="clientLastNameError" style="display: none;">
+                                            {{ _('Le nom du client est requis pour continuer') }} 
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Prénom du Client') }}<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="clientFirstName" name="client_first_name" placeholder="{{ _('John') }}" required>
+                                        <div class="my-2 text-danger" id="clientFirstNameError" style="display: none;">
+                                            {{ _('Le prénom du client est requis pour continuer') }} 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Téléphone du Client') }} <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="clientPhone" name="client_phone_number" placeholder="+123456789" required>
+                                        <div class="my-2 text-danger" id="clientPhoneError" style="display: none;">
+                                            {{ _('Le contact du client est requis pour continuer') }} 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Email du Client') }}</label>
+                                        <input type="email" class="form-control" name="client_email_address" placeholder="exemple@gmail.com">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">{{ _('Adresse du Client') }}<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="clientLocation" name="client_location" placeholder="Niamey Niger" required>
+                                        <div class="my-2 text-danger" id="clientLocationError" style="display: none;">
+                                            {{ _('L\'adresse du client est requise pour continuer') }} 
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Connaissement') }}<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="billsOfLading" name="bills_of_ladding" placeholder="{{ _('MEDUXXXXX') }}" required>
+                                        <div class="my-2 text-danger" id="billsOfLadingError" style="display: none;">
+                                            {{ _('Le connaissement est requis pour continuer') }} 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Le client est-il une entreprise ?') }}</label>
+                                        <select class="form-select" id="clientType" name="client_type">
+                                            <option value="person">{{ _('Particulier') }}</option>
+                                            <option value="company">{{ _('Entreprise') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div id="personFields" class="row" style="display: none;">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Carte d\'identité de l\'agent') }}</label>
+                                        <input type="file" class="form-control" name="agent_id_card">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Signature') }}<span class="text-danger">*</span></label>
+                                        <input type="file" class="form-control" name="signature">
+                                    </div>
+                                </div>
+                                
+                                <div id="companyFields" class="row" style="display: none;">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('RCCM/NIF/LICENSE') }}</label>
+                                        <input type="file" class="form-control" name="company_proof">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Signature + Cachet') }}</label>
+                                        <input type="file" class="form-control" name="company_signature_stamp">
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Nom de l\'Agent') }}<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="agentLastName" name="agent_last_name" placeholder="{{ _('Smith') }}" required>
+                                        <div class="my-2 text-danger" id="agentLastNameError" style="display: none;">
+                                            {{ _('Le nom de l\'agent est requis pour continuer') }} 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Prénom de l\'Agent') }}<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="agentFirstName" name="agent_first_name" placeholder="{{ _('Kimberly') }}" required>
+                                        <div class="my-2 text-danger" id="agentFirstNameError" style="display: none;">
+                                            {{ _('Le prénom de l\'agent est requis pour continuer') }} 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">{{ _('Email de l\'Agent') }}</label>
+                                        <input type="email" class="form-control" name="agent_email_address" placeholder="agent@example.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="ShippingCompanyTitle" class="form-label">{{ _('Compagnie') }}<span class="text-danger">*</span></label>
+                                        <select name="shipping_company" id="ShippingCompanyTitle" class="form-select">
+                                            <option value="{{ _('Veuillez sélectionner la compagnie') }}" disabled selected>{{ _('Veuillez sélectionner la compagnie') }}</option>
+                                            <option value="C/o MSC BENIN S.A." selected>C/o MSC BENIN S.A.</option>
+                                            <option value="C/o MSC Lomé S.A." >C/o MSC Lomé S.A.</option>
+                                        </select>
+                                        <div id="ShippingCompanyTitleError" class="text-danger" style="display: none;">
+                                            {{ _('Veuillez sélectionner une compagnie') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="privacyPolicy" name="privacy_policy" required>
+                                            <label class="form-check-label" for="privacyPolicy">
+                                                {{ _('Vous aviez lu et accepté notre') }} 
+                                                <a href="{{ url_for('main.cgu') }}">{{ _('politique de confidentialité') }}</a>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="my-2 text-danger" id="privacyPolicyError" style="display: none;">
+                                        {{ _('Veuillez accepter la politique de confidentialité pour continuer') }} 
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Fermer') }}</button>
+                                    <button type="button" id="SubmitButton" class="btn btn-info">
+                                        <div class="spinner-border spinner-border-sm" id="Spinner" style="display: none;"></div>
+                                        <span id="LoadingText" style="display: none;">{{ _('En cours') }}</span>
+                                        <i class="bi bi-plus-circle" id="ButtonIcon"></i> 
+                                        {{ _('Continuer') }}
+                                    </button>
+                                </div>
+                            </form>
+                                                                                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination Controls -->
+            <nav aria-label="Pagination" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    {% if pagination.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('career.employee_table', company_id=company.id, page=pagination.prev_num) }}">
+                            <i class="bi bi-chevron-double-left"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-double-left"></i>
+                        </span>
+                    </li>
+                    {% endif %}
+
+                    {% for page_num in pagination.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=2) %}
+                        {% if page_num %}
+                            {% if page_num == pagination.page %}
+                                <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="{{ url_for('career.employee_table', company_id=company.id, page=page_num) }}">{{ page_num }}</a></li>
+                        {% endif %}
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">…</span></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if pagination.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('career.employee_table', company_id=company.id, page=pagination.next_num) }}">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
     <div class="py-5"></div>
+    <script type="module" src="{{ url_for('static', filename='js/async/api/@support_team/Authorizations/EditAuthorization.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/async/api/@support_team/Authorizations/DeleteAuthorization.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/async/api/@support_team/Letter/CreateLetter.js') }}"></script>
+    <script>
+        document.getElementById('clientType').addEventListener('change', function() {
+            var personFields = document.getElementById('personFields');
+            var companyFields = document.getElementById('companyFields');
+            if (this.value === 'person') {
+                personFields.style.display = 'flex';
+                companyFields.style.display = 'none';
+            } else {
+                personFields.style.display = 'none';
+                companyFields.style.display = 'flex';
+            }
+        });
+     </script>  
+     
+    <script>
+        function filterQuotes() {
+            const searchInput = document.getElementById('bills-search').value.toLowerCase();
+            const tableBody = document.querySelector('tbody');
+            const rows = tableBody.getElementsByTagName('tr');
+            const noResultsMessage = document.getElementById('no-results-message');
+            let resultsFound = false;
+
+            for (let row of rows) {
+                const clientCell = row.cells[1].innerText.toLowerCase();
+                const companyCell = row.cells[2].innerText.toLowerCase();
+
+                if (clientCell.includes(searchInput) || companyCell.includes(searchInput)) {
+                    row.style.display = '';
+                    resultsFound = true;
+                } else {
+                    row.style.display = 'none'; 
+                }
+            }
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = resultsFound ? 'none' : 'block';
+            }
+        }
+    </script>
+
 </div>
 
 {% endblock %}
