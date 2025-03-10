@@ -985,7 +985,7 @@ def manage_company_admins(company_id):
         role_id = data.get('role_id')
         password = generate_password()
         station = data.get('station')
-
+        
         if not name or not email or not role_id:
             return jsonify(
                 {
