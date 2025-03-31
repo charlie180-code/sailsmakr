@@ -351,7 +351,7 @@
                 <ul class="pagination justify-content-center">
                     {% if pagination.has_prev %}
                     <li class="page-item">
-                        <a class="page-link" href="{{ url_for('career.employee_table', company_id=company.id, page=pagination.prev_num) }}">
+                        <a class="page-link" href="{{ url_for('order.new_quotes', company_id=company.id, page=pagination.prev_num) }}">
                             <i class="bi bi-chevron-double-left"></i>
                         </a>
                     </li>
