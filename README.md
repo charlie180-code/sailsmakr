@@ -269,13 +269,9 @@ Sailsmakr plans to use **Jenkins** for continuous integration and automated test
 - **Code as Infrastructure (IaC)**: Ensuring that infrastructure is defined and maintained programmatically using tools such as **Terraform** for provsionning infrastucture and **Ansible** for configuring this infrastructure.
 - **Kubernetes (K8s)**: We have so many microservices that needs to be scaled with kubernetes.
 - **Jenkins**: CI/CD tool used for automated testing and continuous integration.
-- **NodeJS and Express**: for some features like task management we will add create a separate NodeJS microservice due to its asynchronous nature and easy integration.
+- **NodeJS and Express**: for some features like task management we will add create a separate NodeJS microservice due to its asynchronous nature and ease of integration.
 - **MongoDB**: Document oriented database in order to deal with some type of data
 - **AI & Machine Learning**: AI email writing assitant based on industry
-- **Single User platform**: User can have a place to manage their works, sync their files, folders trough our Cloud and AI tools
-- **Spotify & Netflix**: We will integrate major music and movies streaming providers to allow some user to relax while they're working
-- **Audiobooks & tools**: we will add a suggestion system that can showcase products based on user job & responsabilities
-- **Social Networking App**: Users from different companies can connect with each other
 - **FedEx & Freightos**: APIs for providing real-time shipping rates, tracking information, and freight suggestions, ensuring that customers get the best shipping options.
 
 ---
