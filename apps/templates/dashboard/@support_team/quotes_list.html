@@ -81,7 +81,7 @@
                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="quoteDetailsModalLabel">{{ _('Détails de la demande de devis') }}</h5>
+                                            <h5 class="modal-title" id="quoteDetailsModalLabel">{{ _('Détails de la demande') }}</h5>
                                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -133,7 +133,7 @@
                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editQuoteModalLabel">{{ _('Modifier la demande de devis') }}</h5>
+                                            <h5 class="modal-title" id="editQuoteModalLabel">{{ _('Modifier la demande') }}</h5>
                                             <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -171,9 +171,6 @@
                                                 <button type="button" id="editQuoteSubmit" data-quote-id="{{ quote.id }}" class="btn btn-primary">{{ _('Enregistrer') }}</button>
                                             </form>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Fermer') }}</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -196,21 +193,20 @@
                         </div>
                         <div class="modal-body">
                             <form id="createLetterForm" method="POST">
-                                <input type="hidden" name="company_id" value="{{ company.id }}">
+                                <input type="hidden" name="company_id" id="company_id" value="{{ company.id }}">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Nom du Client') }}<span class="text-danger">*</span></label>
-                                        <!-- Here fetch authorization data from the database to help the user
-                                            IF POSSIBLE DO IT EVERYWHERE to speed up the process 
-                                        -->
-                                        <input type="text" class="form-control" id="clientLastName" name="client_last_name" placeholder="{{ _('Doe') }}" required>
+                                        <input type="text" class="form-control" id="clientLastName" name="client_last_name" placeholder="{{ _('Doe') }}" list="clientLastNameSuggestions" autocomplete="off" required>
+                                        <datalist id="clientLastNameSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="clientLastNameError" style="display: none;">
                                             {{ _('Le nom du client est requis pour continuer') }} 
-                                        </div>                                        
+                                        </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Prénom du Client') }}<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="clientFirstName" name="client_first_name" placeholder="{{ _('John') }}" required>
+                                        <input type="text" class="form-control" id="clientFirstName" name="client_first_name" placeholder="{{ _('John') }}" list="clientFirstNameSuggestions" autocomplete="off" required>
+                                        <datalist id="clientFirstNameSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="clientFirstNameError" style="display: none;">
                                             {{ _('Le prénom du client est requis pour continuer') }} 
                                         </div>
@@ -220,7 +216,8 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Téléphone du Client') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="clientPhone" name="client_phone_number" placeholder="+123456789" required>
+                                        <input type="text" class="form-control" id="clientPhone" name="client_phone_number" placeholder="+227 74411794" autocomplete="off"  list="clientPhoneSuggestions" required>
+                                        <datalist id="clientPhoneSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="clientPhoneError" style="display: none;">
                                             {{ _('Le contact du client est requis pour continuer') }} 
                                         </div>
@@ -234,7 +231,8 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <label class="form-label">{{ _('Adresse du Client') }}<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="clientLocation" name="client_location" placeholder="Niamey Niger" required>
+                                        <input type="text" class="form-control" id="clientLocation" name="client_location" placeholder="Niamey Niger" list="clientLocationSuggestions" autocomplete="off" required>
+                                        <datalist id="clientLocationSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="clientLocationError" style="display: none;">
                                             {{ _('L\'adresse du client est requise pour continuer') }} 
                                         </div>                                        
@@ -244,7 +242,8 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Connaissement') }}<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="billsOfLading" name="bills_of_ladding" placeholder="{{ _('MEDUXXXXX') }}" required>
+                                        <input type="text" class="form-control" id="billsOfLading" name="lading_bills_identifier" autocomplete="off" placeholder="{{ _('MEDUXXXXX') }}" list="billsOfLadingSuggestions" required>
+                                        <datalist id="billsOfLadingSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="billsOfLadingError" style="display: none;">
                                             {{ _('Le connaissement est requis pour continuer') }} 
                                         </div>
@@ -274,30 +273,35 @@
                                 <div id="companyFields" class="row" style="display: none;">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="company_proof_nif">{{ _('NIF/LICENSE') }}</label>
-                                        <input class="form-control" type="text" name="company_proof_nif" id="company_proof_nif">
+                                        <input class="form-control" type="text" name="company_proof_nif" id="company_proof_nif" list="companyNifSuggestions" autocomplete="off">
+                                        <datalist id="companyNifSuggestions"></datalist>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label" for="company_proof_rccm">{{ _('RCCM') }}</label>
-                                        <input class="form-control" type="text" name="company_proof_rccm" id="company_proof_rccm">
+                                        <input class="form-control" type="text" name="company_proof_rccm" id="company_proof_rccm" list="companyRccmSuggestions" autocomplete="off">
+                                        <datalist id="companyRccmSuggestions"></datalist>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Nom de l\'Agent') }}<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="agentLastName" name="agent_last_name" placeholder="{{ _('Smith') }}" required>
+                                        <input type="text" class="form-control" id="agentLastName" name="agent_last_name" placeholder="{{ _('Smith') }}" list="agentLastNameSuggestions" autocomplete="off" required>
+                                        <datalist id="agentLastNameSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="agentLastNameError" style="display: none;">
                                             {{ _('Le nom de l\'agent est requis pour continuer') }} 
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Prénom de l\'Agent') }}<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="agentFirstName" name="agent_first_name" placeholder="{{ _('Kimberly') }}" required>
+                                        <input type="text" class="form-control" id="agentFirstName" name="agent_first_name" placeholder="{{ _('Kimberly') }}" list="agentFirstNameSuggestions" autocomplete="off" required>
+                                        <datalist id="agentFirstNameSuggestions"></datalist>
                                         <div class="my-2 text-danger" id="agentFirstNameError" style="display: none;">
                                             {{ _('Le prénom de l\'agent est requis pour continuer') }} 
                                         </div>
                                     </div>
                                 </div>
+                                
                                 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -342,8 +346,7 @@
                                         {{ _('Continuer') }}
                                     </button>
                                 </div>
-                            </form>
-                                                                                        
+                            </form>                                         
                         </div>
                     </div>
                 </div>
