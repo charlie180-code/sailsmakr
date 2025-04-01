@@ -259,7 +259,8 @@
                                 </div>
                                 
                                 <div id="personFields" class="row" style="display: none;">
-                                    <div class="col-md-6 mb-3">
+                                    <!--
+                                        <div class="col-md-6 mb-3">
                                         <label class="form-label">{{ _('Carte d\'identité de l\'agent') }}</label>
                                         <input type="file" class="form-control" name="agent_id_card">
                                     </div>
@@ -267,16 +268,17 @@
                                         <label class="form-label">{{ _('Signature') }}<span class="text-danger">*</span></label>
                                         <input type="file" class="form-control" name="signature">
                                     </div>
+                                    -->
                                 </div>
                                 
                                 <div id="companyFields" class="row" style="display: none;">
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">{{ _('RCCM/NIF/LICENSE') }}</label>
-                                        <input type="file" class="form-control" name="company_proof">
+                                        <label class="form-label" for="company_proof_nif">{{ _('NIF/LICENSE') }}</label>
+                                        <input class="form-control" type="text" name="company_proof_nif" id="company_proof_nif">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">{{ _('Signature + Cachet') }}</label>
-                                        <input type="file" class="form-control" name="company_signature_stamp">
+                                        <label class="form-label" for="company_proof_rccm">{{ _('RCCM') }}</label>
+                                        <input class="form-control" type="text" name="company_proof_rccm" id="company_proof_rccm">
                                     </div>
                                 </div>
                                 
