@@ -409,3 +409,26 @@ def prepare_send_container_release_letter(quote_id, company_id):
         quote=quote,
         company=company
     )
+
+@order.route('/search-authorizations')
+@login_required
+def search_authorizations(company_id):
+    search_term = request.args.get('term', '')
+    authorizations = Authorization.query.filter(
+        Authorization.company_id == company_id,
+        Authorization.client_last_name.ilike(f'%{search_term}%')
+    ).all()
+    
+    results = [{
+        'id': auth.id,
+        'client_last_name': auth.client_last_name,
+        'client_first_name': auth.client_first_name,
+        'client_phone_number': auth.client_phone_number,
+        'client_location': auth.client_location,
+        'agent_first_name': auth.agent_first_name,
+        'agent_last_name': auth.agent_last_name,
+        'agent_email_address': auth.agent_email_address,
+        'lading_bills_identifier': auth.lading_bills_identifier,
+    } for auth in authorizations]
+    
+    return jsonify(results)
