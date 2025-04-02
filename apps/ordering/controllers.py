@@ -15,6 +15,7 @@ from ..decorators import customer_required, agent_required
 from flask_babel import gettext as _
 from weasyprint import HTML
 from datetime import datetime
+from sqlalchemy import or_, and_
 import json
 import io
 
@@ -410,25 +411,50 @@ def prepare_send_container_release_letter(quote_id, company_id):
         company=company
     )
 
-@order.route('/search-authorizations')
-@login_required
+@order.route('/search-authorizations/<int:company_id>', methods=['GET'])
 def search_authorizations(company_id):
-    search_term = request.args.get('term', '')
-    authorizations = Authorization.query.filter(
-        Authorization.company_id == company_id,
-        Authorization.client_last_name.ilike(f'%{search_term}%')
-    ).all()
+    term = request.args.get('term', '').strip()
+    field = request.args.get('field', '').strip()
     
-    results = [{
-        'id': auth.id,
-        'client_last_name': auth.client_last_name,
-        'client_first_name': auth.client_first_name,
-        'client_phone_number': auth.client_phone_number,
-        'client_location': auth.client_location,
-        'agent_first_name': auth.agent_first_name,
-        'agent_last_name': auth.agent_last_name,
-        'agent_email_address': auth.agent_email_address,
-        'lading_bills_identifier': auth.lading_bills_identifier,
-    } for auth in authorizations]
+    if not term or not field:
+        return jsonify([])
     
-    return jsonify(results)
+    allowed_fields = {
+        'client_last_name', 'client_first_name', 'client_location',
+        'client_phone_number', 'lading_bills_identifier',
+        'agent_last_name', 'agent_first_name',
+        'company_proof_nif', 'company_proof_rccm'
+    }
+    
+    if field not in allowed_fields:
+        return jsonify([])
+    
+    try:
+        filter_condition = and_(
+            getattr(Authorization, field).ilike(f'%{term}%'),
+            Authorization.company_id == company_id
+        )
+        
+        results = Authorization.query.filter(filter_condition).limit(20).all()
+        
+        authorizations = []
+        for auth in results:
+            auth_data = {
+                'client_last_name': auth.client_last_name,
+                'client_first_name': auth.client_first_name,
+                'client_location': auth.client_location,
+                'client_phone_number': auth.client_phone_number,
+                'lading_bills_identifier': auth.lading_bills_identifier,
+                'agent_last_name': auth.agent_last_name,
+                'agent_first_name': auth.agent_first_name,
+                'company_proof_nif': auth.company_proof_nif,
+                'company_proof_rccm': auth.company_proof_rccm
+            }
+            authorizations.append(auth_data)
+            print(authorizations)
+        
+        return jsonify(authorizations)
+    
+    
+    except Exception as e:
+        return jsonify([])
