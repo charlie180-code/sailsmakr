@@ -28,14 +28,11 @@ class Authorization(db.Model):
     service_fees = db.Column(db.Float, default=0.0)
     granted = db.Column(db.Boolean, default=False)
     
-    # Company specific fields
     company_proof_nif = db.Column(db.String)
     company_proof_rccm = db.Column(db.String)
     company_name = db.Column(db.String)
     is_company = db.Column(db.Boolean, default=False)
     
-    # ForeignKey to link to User
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    # ForeignKey to link to Company
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
