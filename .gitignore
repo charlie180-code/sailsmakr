@@ -14,7 +14,6 @@ sails.todo
 dist
 /linux-venv
 instance
-migrations
 ./win-venv
 task.todo
 server
