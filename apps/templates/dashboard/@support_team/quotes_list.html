@@ -6,7 +6,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="my-5 d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
                 <li class="breadcrumb-item">
@@ -29,7 +29,7 @@
         <span>{{ _('Nouvelles requêtes') }}</span>
     </h2>
 
-    <div class="mb-3">
+    <div class="mb-3 col-md-4">
         <label for="bills-search" class="form-label">{{ _('Taper un Client, Transitaire, N° BL...') }}</label>
         <input type="text" class="form-control" id="bills-search" oninput="filterQuotes()" placeholder="{{ _('Taper un Client, Transitaire, N° BL...') }}">
     </div>
@@ -38,31 +38,41 @@
         <div class="table-responsive">
             <table class="table align-items-center mb-0 border-bottom">
                 <thead class="bg-light">
-                    <tr>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ _('ID') }}</th>
+                    <tr class="border-bottom">
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">#</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ _('ID') }}</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ _('Client') }}</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ _('Compagnie') }}</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ _('N° Container') }}</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ _('Options') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for quote in quotes %}
                         <tr>
-                            <td class="ps-2">{{ quote.id }}</td>
+                            <td>
+                                {% if quote.is_company %}
+                                    <i class="bi bi-building text-primary" title="{{ _('Entreprise')}}"></i>
+                                {% else %}
+                                    <i class="bi bi-person text-info" title="{{ _('Particulier') }}"></i>
+                                {% endif %}
+                            </td>
+                            <td class="text-xxs font-weight-bolder opacity-7 ps-2">{{ quote.id }}</td>
                             {% if quote.is_company %}
-                                <td class="ps-2">
+                                <td class="text-xs ps-2">
                                     {{ quote.company_name }}
                                 </td>
                             {% else %}
-                                <td class="ps-2">
+                                <td class="text-xs ps-2">
                                     {{ quote.client_first_name }} {{ quote.client_last_name }}
                                 </td>
                             {% endif %}
-                            <td class="ps-2">{{ quote.shipping_company_title }}</td>
+                            <td class="text-xs ps-2">{{ quote.shipping_company_title }}</td>
+                            <td class="text-xs ps-2">{{ quote.lading_bills_identifier }}</td>
                             <td>
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {{ _('Actions') }}
+                                    <button class="btn btn-md shadow-lg" type="button" id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ quote.id }}">
                                         <li>
