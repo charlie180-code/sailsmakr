@@ -20,15 +20,13 @@
         .container {
             background: white;
             padding: 10px;
-            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             page-break-inside: avoid;
         }
         .header {
-            border: 2px solid black;
+            border: 1px solid black;
             padding: 20px;
-            border-radius: none;
             text-align: center;
             font-weight: bold;
         }
@@ -77,9 +75,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <p><strong>NOM DU CLIENT:</strong> {{ data.client_last_name }} {{ data.client_first_name }}</p>
-            <p><strong>ADRESSE:</strong> {{ data.client_location }}</p>
-            <p><strong>TEL:</strong> {{ data.client_phone_number }}</p>
+            <div>
+                <strong>{{ data.client_last_name }} {{ data.client_first_name }}</strong>
+            </div>
+            <div>
+                <strong>{{ data.client_location }}</strong>
+            </div>
+            <div>
+                {{ data.client_phone_number }}
+            </div>
+            <div>
+                {{ data.client_email_address }}
+            </div>
         </div>
         
         <div class="date-section">
@@ -101,11 +108,11 @@
             
             <p>The purpose of this letter is to clarify the terms on which we have granted authority to <strong>{{ data.agent_last_name }} {{ data.agent_first_name}}</strong></p>
             
-            <p>We expressly authorise <strong>{{ data.agent_last_name }} {{ data.agent_first_name}}</strong> to request delivery from MSC of goods consigned or endorsed to <strong>{{ data.client_last_name }} {{ data.client_first_name}}</strong> under original bills of lading N° <strong>{{ data.bills_of_ladding }}</strong> and consigned to <strong>{{ data.client_last_name }} {{ data.client_first_name}}</strong> under sea waybills.</p>
+            <p>We expressly authorise <strong>{{ data.agent_last_name }} {{ data.agent_first_name}}</strong> to request delivery from MSC of goods consigned or endorsed to <strong>{{ data.client_last_name }} {{ data.client_first_name}}</strong> under original bills of lading <strong>N° {{ data.lading_bills_identifier }}</strong> and consigned to <strong>{{ data.client_last_name }} {{ data.client_first_name}}</strong> under sea waybills.</p>
             
             <p>We expressly authorise MSC to release our goods to <strong>{{ data.agent_last_name }} {{ data.agent_first_name}}</strong> upon presentation of an original bill of lading, or identification against a sea waybill of lading, unless we have given prior notice to the contrary to MSC in writing.</p>
             
-            <p>In consideration of MSC complying with our above request, we hereby agree to indemnify MSC and MSC BENIN S.A., their respective servants and agents and to hold all of you harmless in respect of any liability, loss, damage or expenses of whatsoever nature which any of them may sustain by reason of delivering the cargo in accordance with our request.</p>
+            <p>In consideration of MSC complying with our above request, we hereby agree to indemnify MSC and {% if data.shipping_company == 'C/o MSC BENIN S.A.' %}{{ _('MSC BENIN S.A.') }}{% elif data.shipping_company == 'C/o MSC Lomé S.A.'  %}{{ _('MSC Togo S.A.') }}{% else %}{{ data.shipping_company }}{% endif %}, their respective servants and agents and to hold all of you harmless in respect of any liability, loss, damage or expenses of whatsoever nature which any of them may sustain by reason of delivering the cargo in accordance with our request.</p>
             
             <p>Nothing in this letter operates to relieve MSC of any of its obligations or liabilities under the contract of carriage.</p>
             
