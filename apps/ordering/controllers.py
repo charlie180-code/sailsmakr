@@ -334,42 +334,70 @@ def edit_quote(quote_id):
     db.session.commit()
     return jsonify({'success': True})
 
+
 @order.route('/create_new_container_release_letter', methods=['POST'])
 @login_required
 def create_container_letter():
     try:
         data = request.form
+        client_type = data.get("client_type", "person")
 
-        authorization = Authorization(
-            client_first_name=data["client_first_name"],
-            client_last_name=data["client_last_name"],
-            client_phone_number=data["client_phone_number"],
-            client_email_address=data.get("client_email_address"),
-            client_location=data["client_location"],
-            agent_first_name=data["agent_first_name"],
-            agent_last_name=data["agent_last_name"],
-            agent_email_address=data.get("agent_email_address"),
-            shipping_company_title=data["shipping_company"],
-            lading_bills_identifier=data["bills_of_ladding"],
-            company_id=data["company_id"]
-        )
+        authorization_data = {
+            "client_first_name": data.get("client_first_name", ""),
+            "client_last_name": data["client_last_name"],
+            "client_phone_number": data["client_phone_number"],
+            "client_email_address": data.get("client_email_address"),
+            "client_location": data["client_location"],
+            "agent_first_name": data["agent_first_name"],
+            "agent_last_name": data["agent_last_name"],
+            "agent_email_address": data.get("agent_email_address"),
+            "shipping_company_title": data["shipping_company"],
+            "lading_bills_identifier": data["lading_bills_identifier"],
+            "company_id": data["company_id"],
+            "is_company": client_type == "company"
+        }
+
+
+        if client_type == "company":
+            authorization_data.update({
+                "company_proof_nif": data.get("company_proof_nif"),
+                "company_proof_rccm": data.get("company_proof_rccm"),
+                "company_name": data.get("company_name")
+            })
+
+        company_authorization_data = {
+            "company_email": data.get("company_email_address"),
+            "company_phone": data.get("company_phone_number"),
+            "company_address": data.get("company_location"),
+            "lading_bills_identifier": data["lading_bills_identifier"],
+            "agent_first_name": data["agent_first_name"],
+            "agent_last_name": data["agent_last_name"],
+        }
+
+        authorization = Authorization(**authorization_data)
 
         db.session.add(authorization)
         db.session.commit()
         
         current_date = datetime.today().strftime("%d/%m/%Y")
 
+        template = "reports/shipping/container_release_letter_company_msc.html" if client_type == "company" else "reports/shipping/container_release_letter_msc.html"
+
         html_content = render_template(
-            "reports/shipping/container_release_letter_msc.html", 
+            template, 
             data=data, 
-            date=current_date
+            date=current_date,
+            company_authorization_data=company_authorization_data
         )
 
         pdf_stream = io.BytesIO()
         HTML(string=html_content).write_pdf(pdf_stream)
         pdf_stream.seek(0)
 
-        pdf_filename = f"{authorization.client_first_name}_{authorization.client_last_name}_N°_{authorization.id}.pdf"
+        if client_type == 'company':
+            pdf_filename = f"{authorization.company_name}_N°_{authorization.id}.pdf"
+        else:
+            pdf_filename = f"{authorization.client_first_name}_{authorization.client_last_name}_N°_{authorization.id}.pdf"
 
         response_data = {
             "success": True,
@@ -423,7 +451,8 @@ def search_authorizations(company_id):
         'client_last_name', 'client_first_name', 'client_location',
         'client_phone_number', 'lading_bills_identifier',
         'agent_last_name', 'agent_first_name',
-        'company_proof_nif', 'company_proof_rccm'
+        'company_proof_nif', 'company_proof_rccm',
+        'company_name'
     }
     
     if field not in allowed_fields:
@@ -448,10 +477,10 @@ def search_authorizations(company_id):
                 'agent_last_name': auth.agent_last_name,
                 'agent_first_name': auth.agent_first_name,
                 'company_proof_nif': auth.company_proof_nif,
-                'company_proof_rccm': auth.company_proof_rccm
+                'company_proof_rccm': auth.company_proof_rccm,
+                'company_name': auth.company_name
             }
             authorizations.append(auth_data)
-            print(authorizations)
         
         return jsonify(authorizations)
     
