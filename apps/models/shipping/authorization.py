@@ -24,14 +24,15 @@ class Authorization(db.Model):
     provider_name2 = db.Column(db.String)
     provider_name3 = db.Column(db.String)
     provider_name4 = db.Column(db.String)
-    company_proof_nif = db.Column(db.String)
-    company_proof_rccm = db.Column(db.String)
     lading_bills_identifier = db.Column(db.String, nullable=False)
     service_fees = db.Column(db.Float, default=0.0)
     granted = db.Column(db.Boolean, default=False)
     
-    # ForeignKey to link to User
+    company_proof_nif = db.Column(db.String)
+    company_proof_rccm = db.Column(db.String)
+    company_name = db.Column(db.String)
+    is_company = db.Column(db.Boolean, default=False)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    # ForeignKey to link to Company
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
