@@ -2,106 +2,89 @@ import { showLoadingState, revertToOriginalState } from '../../../../UI/StatusHe
 import validateField from '../../../../UI/ValidationHelpers.js';
 import domain from '../../../../_globals/domain.js';
 
-
-const formId = "createLetterForm";
-const submitButtonId = "SubmitButton";
-const spinnerId = "Spinner";
-const buttonIconId = "ButtonIcon";
-const endpoint = `${domain}/order/v1/create_new_container_release_letter`;
-
-document.getElementById(submitButtonId).addEventListener("click", async function (event) {
-    event.preventDefault();
-    const formId = "createLetterForm";
-    const submitButtonId = "SubmitButton";
-    const spinnerId = "Spinner";
-    const buttonIconId = "ButtonIcon";
-    const endpoint = `${domain}/order/v1/create_new_container_release_letter`;
-
-    function customValidation(value) {
-        return value.trim() !== "";
-    }
+document.getElementById('createLetterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
     
-    let isFormValid = true;
-
-    const fieldMappings = [
-        { id: "client_last_name", errorId: "clientLastNameError" },
-        { id: "client_first_name", errorId: "clientFirstNameError" },
-        { id: "client_phone_number", errorId: "clientPhoneError" },
-        { id: "client_location", errorId: "clientLocationError" },
-        { id: "bills_of_ladding", errorId: "billsOfLadingError" },
-        { id: "agent_last_name", errorId: "agentLastNameError" },
-        { id: "agent_first_name", errorId: "agentFirstNameError" },
-    ];
-
-    fieldMappings.forEach(({ id, errorId }) => {
-        const field = document.querySelector(`[name="${id}"]`);
-        const errorText = document.getElementById(errorId);
-        if (!validateField(field, errorText, customValidation)) {
-            isFormValid = false;
-        }
-    });
-
-    const privacyPolicy = document.getElementById("privacyPolicy");
-    const privacyError = document.getElementById("privacyPolicyError");
-    if (!privacyPolicy.checked) {
-        privacyError.style.display = "block";
-        isFormValid = false;
-    } else {
-        privacyError.style.display = "none";
-    }
-
-    if (isFormValid) {
-        try {
-            showLoadingState(submitButtonId, spinnerId, buttonIconId);
-
-            const formData = new FormData(document.getElementById(formId));
-            
-            const response = await fetch(endpoint, {
-                method: "POST",
-                body: formData
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to generate PDF.");
+    const form = this;
+    const buttonId = 'SubmitButton';
+    const spinnerId = 'Spinner';
+    const loadingTextId = 'ButtonText';
+    const endpoint = `${domain}/order/v1/create_new_container_release_letter`;
+    
+    showLoadingState(buttonId, spinnerId, loadingTextId);
+    
+    try {
+        const fields = form.querySelectorAll("[required]");
+        let isValid = true;
+        
+        fields.forEach(field => {
+            const errorText = document.getElementById(field.id + "Error");
+            if (errorText) {
+                isValid = isValid && validateField(field, errorText, (value) => value.trim() !== '');
             }
-
-            const jsonData = JSON.parse(response.headers.get('X-JSON-Data'));
-
-            const pdfFilename = jsonData.pdf_filename;
-            const title = jsonData.title;
-            const message = jsonData.message;
-
-            const pdfBlob = await response.blob();
-            const url = window.URL.createObjectURL(pdfBlob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = pdfFilename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-
-            Swal.fire({
-                title: title,
-                text: message,
-                icon: "success",
-                confirmButtonText: jsonData.confirmButtonText || "OK"
-            }).then(() => {
-                location.reload();
-            });
-
-            revertToOriginalState(submitButtonId, spinnerId, buttonIconId);
-
-        } catch (error) {
-            console.error("Error:", error);
-            revertToOriginalState(submitButtonId, spinnerId, buttonIconId);
+        });
+        
+        const emailFields = form.querySelectorAll("input[type='email']");
+        emailFields.forEach(field => {
+            const errorText = document.getElementById(field.id + "Error");
+            if (errorText && field.value.trim() !== '') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                isValid = isValid && validateField(field, errorText, (value) => emailRegex.test(value));
+            }
+        });
+        
+        if (!isValid) {
+            revertToOriginalState(buttonId, spinnerId, loadingTextId);
+            return;
+        }
+        
+        const formData = new FormData(form);
+        
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            const jsonData = response.headers.get('X-JSON-Data');
+            const responseData = jsonData ? JSON.parse(jsonData) : {};
             
             Swal.fire({
-                title: "Error!",
-                text: error.message || "An error occurred while generating the PDF.",
-                icon: "error",
-                confirmButtonText: "OK"
+                title: responseData.title || 'Success',
+                text: responseData.message || 'Data saved successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                response.blob().then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = responseData.pdf_filename || 'document.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                    
+                    window.location.reload();
+                });
+            });
+        } else {
+            const errorData = await response.json();
+            Swal.fire({
+                title: errorData.title || 'Error',
+                text: errorData.message || 'Something went wrong.',
+                icon: 'error',
+                confirmButtonText: 'OK'
             });
         }
+    } catch (error) {
+        Swal.fire({
+            title: 'Network Error!',
+            text: 'Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+    } finally {
+        revertToOriginalState(buttonId, spinnerId, loadingTextId);
     }
 });
