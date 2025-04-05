@@ -145,11 +145,15 @@ def settings(company_id):
 
         if arrival_date:
             arrival_date = datetime.strptime(arrival_date, "%Y-%m-%d").date()
+            current_user.arrival_date = arrival_date
+        else:
+            current_user.arrival_date = None
         if leaving_date:
             leaving_date = datetime.strptime(leaving_date, "%Y-%m-%d").date()
+            current_user.leaving_date = leaving_date
 
-        current_user.arrival_date = arrival_date
-        current_user.leaving_date = leaving_date
+        else:
+            current_user.leaving_date = None
 
 
         # Handle profile image upload
@@ -190,10 +194,8 @@ def settings(company_id):
                     return redirect(url_for('user.settings', company_id=company.id))
                 try:
                     if check_internet_connection():
-                        # Save the company logo remotely
-                        saved_company_logo_url = save_files([company_logo], "company_logos")[0]
+                        saved_company_logo_url = save_files([company_logo], "company_logos/")[0]
                     else:
-                        # Save the company logo locally
                         saved_company_logo_filename = save_file_locally(company_logo, folder_name="static/company_logos")
                         saved_company_logo_url = url_for('static', filename=f"company_logos/{saved_company_logo_filename}", _external=True)
 
