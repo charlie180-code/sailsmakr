@@ -17,7 +17,6 @@ const autocompleteFields = [
     { id: 'clientFirstName', field: 'client_first_name', datalist: 'clientFirstNameSuggestions' },
     { id: 'clientLocation', field: 'client_location', datalist: 'clientLocationSuggestions' },
     { id: 'clientPhone', field: 'client_phone_number', datalist: 'clientPhoneSuggestions' },
-    { id: 'billsOfLading', field: 'lading_bills_identifier', datalist: 'billsOfLadingSuggestions' },
     { id: 'agentLastName', field: 'agent_last_name', datalist: 'agentLastNameSuggestions' },
     { id: 'agentFirstName', field: 'agent_first_name', datalist: 'agentFirstNameSuggestions' },
     { id: 'company_proof_nif', field: 'company_proof_nif', datalist: 'companyNifSuggestions' },
