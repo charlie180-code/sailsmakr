@@ -41,9 +41,13 @@ class User(db.Model, UserMixin):
     files = db.relationship('File', backref='user', lazy=True)
 
 
-    email_username = db.Column(db.String)
-    email_password = db.Column(db.String)
-    email_provider = db.Column(db.String)
+    email_username = db.Column(db.String())
+    email_password = db.Column(db.String())
+    email_provider = db.Column(db.String(), default='gmail')
+    smtp_server = db.Column(db.String())
+    smtp_port = db.Column(db.Integer, default=587)
+    imap_server = db.Column(db.String())
+    imap_port = db.Column(db.Integer, default=993)
     
     # Transport&logistics specific relationships
     products = db.relationship('Product', backref='author', lazy=True)
@@ -128,6 +132,14 @@ class User(db.Model, UserMixin):
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
+
+    def set_email_password(self, password):
+        # Implement encryption here (e.g., using Fernet)
+        self.email_password = password  # In production, encrypt this
+        
+    def get_email_password(self):
+        # Implement decryption here
+        return self.email_password
 
     @password.setter
     def password(self, password):

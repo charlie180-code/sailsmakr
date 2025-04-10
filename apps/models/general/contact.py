@@ -6,7 +6,7 @@ class Contact(db.Model):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True, nullable=False)
-    phone = db.Column(db.String, unique=True, nullable=False)
+    phone = db.Column(db.String, unique=True)
     message = db.Column(db.String)
     gender = db.Column(db.String)
     source = db.Column(db.String)

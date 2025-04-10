@@ -43,7 +43,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
     PLACEHOLDER_STATIC_URL = os.environ.get('PLACEHOLDER_PRODUCTION_STATIC_URL')
     LOGIN_URL = os.environ.get('PRODUCTION_LOGIN_URL')
     SERVER_URL = os.environ.get('PRODUCTION_SERVER_URL')
