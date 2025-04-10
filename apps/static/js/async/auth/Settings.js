@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const profileImageInput = document.getElementById('profileImageInput');
     const profileImagePreview = document.getElementById('profileImagePreview');
-    const companyLogoInput = document.getElementById('CompanyLogoInput');
-    const companyLogoPreview = document.getElementById('companyLogoPreview');
     const submitButton = document.querySelector('button[type="submit"]');
     const loadingText = document.getElementById('LoadingText');
     const spinner = document.querySelector('.spinner-border');
@@ -16,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailProviderInput = document.getElementById('EmailProviderInput');
     const dropdownItems = document.querySelectorAll('.dropdown-item');
 
+
     document.getElementById('toggleOldPassword').addEventListener('click', function () {
         const oldPasswordInput = document.getElementById('OldPassword');
         const eyeIconOld = document.getElementById('eyeIconOld');
@@ -27,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
             eyeIconOld.setAttribute("fill", "gray");
         }
     });
+
+
 
     document.getElementById('toggleNewPassword').addEventListener('click', function () {
         const newPasswordInput = document.getElementById('NewPassword');
@@ -42,11 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     arrivalDate.addEventListener("change", function () {
         leavingDate.min = arrivalDate.value;
-    });
+      });
     
-    leavingDate.addEventListener("change", function () {
+      leavingDate.addEventListener("change", function () {
         arrivalDate.max = leavingDate.value;
-    });
+      });
+
+
 
     document.getElementById('toggleConfirmPassword').addEventListener('click', function () {
         const confirmPasswordInput = document.getElementById('ConfirmPassword');
@@ -72,10 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Profile image preview
+
+    
     profileImageInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
-        if (file && file.size > 5 * 1024 * 1024) { // 5 MB
+        if (file.size > 5 * 1024 * 1024) { // 5 MB
             alert('La taille de l\'image ne doit pas dépasser 5 Mo.');
             profileImageInput.value = '';
             profileImagePreview.src = "{{ url_for('static', filename='default-profile.png') }}";
@@ -86,28 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.onload = function() {
             profileImagePreview.src = reader.result;
         };
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    });
-  
-    // Company logo preview
-    companyLogoInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file && file.size > 5 * 1024 * 1024) { // 5 MB
-            alert('La taille de l\'image ne doit pas dépasser 5 Mo.');
-            companyLogoInput.value = '';
-            companyLogoPreview.src = "{{ url_for('static', filename='img/default_logo.png') }}";
-            return;
-        }
-  
-        const reader = new FileReader();
-        reader.onload = function() {
-            companyLogoPreview.src = reader.result;
-        };
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        reader.readAsDataURL(file);
     });
   
     dropdownItems.forEach(item => {
@@ -133,9 +116,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (profileImageInput.files.length > 0) {
             formData.append('profile_image', profileImageInput.files[0]);
         }
-        if (companyLogoInput.files.length > 0) {
-            formData.append('company_logo', companyLogoInput.files[0]);
+
+        if (emailProviderInput === 'custom') {
+            formData.append('smtp_server', smtpServer);
+            formData.append('smtp_port', smtpPort);
+            formData.append('imap_server', smtpServer);
+            formData.append('imap_port', smtpPort);
         }
+            
   
         try {
             const response = await fetch(form.action, {
@@ -164,4 +152,5 @@ document.addEventListener('DOMContentLoaded', function() {
             ButtonText.style.display = 'inline';
         }
     });
-});
+  });
+  

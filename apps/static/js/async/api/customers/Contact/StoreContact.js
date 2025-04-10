@@ -1,4 +1,4 @@
-document.getElementById('addContactButton').addEventListener('submit', async () => {
+document.getElementById('addContactButton').addEventListener('click', async () => {
   const spinner = document.getElementById('spinner');
   const buttonText = document.getElementById('buttonText');
   const firstName = document.getElementById('first_name').value;
@@ -10,7 +10,6 @@ document.getElementById('addContactButton').addEventListener('submit', async () 
   const duplicateEmailError = document.getElementById('DuplicateEmailContact')
   const duplicatePhoneError = document.getElementById('DuplicatePhoneError')
 
-  // Show spinner and disable button
   spinner.classList.remove('d-none');
   document.getElementById('addContactButton').disabled = true;
 
@@ -53,7 +52,6 @@ document.getElementById('addContactButton').addEventListener('submit', async () 
           text: 'Une erreur s\'est produite. Veuillez réessayer plus tard.',
       });
   } finally {
-      // Hide spinner and enable button
     spinner.classList.add('d-none');
     document.getElementById('addContactButton').disabled = false;
   }
