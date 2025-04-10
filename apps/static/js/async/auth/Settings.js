@@ -116,6 +116,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (profileImageInput.files.length > 0) {
             formData.append('profile_image', profileImageInput.files[0]);
         }
+
+        if (emailProviderInput === 'custom') {
+            formData.append('smtp_server', smtpServer);
+            formData.append('smtp_port', smtpPort);
+            formData.append('imap_server', smtpServer);
+            formData.append('imap_port', smtpPort);
+        }
+            
   
         try {
             const response = await fetch(form.action, {
