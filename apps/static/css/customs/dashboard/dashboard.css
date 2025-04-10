@@ -393,7 +393,92 @@ select option img {
 #TransportCompanySuggestions .list-group-item:hover {
   background-color: #f8f9fa;
 }
+
+/***************************************
+emailing for container release letter
+system
+**************************************
+*/
+
 .client-fields { transition: all 0.3s ease; }
 .card { border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
 .card-title { color: #2c3e50; font-weight: 600; }
 .btn-outline-primary.active { background-color: var(--bs-primary); color: white; }
+
+
+.contact-selector {
+  position: relative;
+}
+.contact-input-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  min-height: 45px;
+}
+.contact-tag {
+  display: flex;
+  align-items: center;
+  background-color: #e9ecef;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.contact-tag-remove {
+  margin-left: 5px;
+  cursor: pointer;
+  color: #6c757d;
+}
+.contact-input {
+  flex: 1;
+  min-width: 150px;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+.contact-suggestions {
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: none;
+}
+.contact-suggestion {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.contact-suggestion:hover {
+  background-color: #f8f9fa;
+}
+#editor {
+  height: 300px;
+}
+.file-attachments {
+  margin-top: 15px;
+}
+.attachment-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 5px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+.attachment-remove {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #dc3545;
+}
+
+/********************************************
+end emailing for container release letter
+system
+**********************************************/
