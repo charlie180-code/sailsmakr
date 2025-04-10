@@ -11,6 +11,7 @@ static/data
 ./sailsmakr.todo
 ./questions.txt
 sails.todo
+tasks.todo.txt
 dist
 /linux-venv
 instance
