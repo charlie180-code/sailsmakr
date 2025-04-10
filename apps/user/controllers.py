@@ -108,6 +108,11 @@ def settings(company_id):
         email_provider = request.form.get('email_provider')
         email_username = request.form.get('email_username')
         email_password = request.form.get('email_password')
+        email_smtp_server = request.form.get('smtp_server')
+        email_smtp_port = request.form.get('smtp_port')
+        email_imap_server = request.form.get('imap_server')
+        email_imap_port = request.form.get('imap_port')
+
 
         # get service mutations data
         transport_company = request.form.get('transport_company')
@@ -139,7 +144,12 @@ def settings(company_id):
 
         current_user.email_provider = email_provider
         current_user.email_username = email_username
-        current_user.email_password = generate_password_hash(email_password)
+        current_user.email_password = email_password
+        current_user.imap_port = email_imap_port
+        current_user.smtp_server = email_smtp_server
+        current_user.smtp_port = email_smtp_port
+        current_user.imap_server = email_imap_server
+        
 
         current_user.transport_company = transport_company
 
