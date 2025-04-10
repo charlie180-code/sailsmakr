@@ -449,7 +449,7 @@ def search_authorizations(company_id):
     
     allowed_fields = {
         'client_last_name', 'client_first_name', 'client_location',
-        'client_phone_number', 'lading_bills_identifier',
+        'client_phone_number',
         'agent_last_name', 'agent_first_name',
         'company_proof_nif', 'company_proof_rccm',
         'company_name'
@@ -473,11 +473,10 @@ def search_authorizations(company_id):
                 'client_first_name': auth.client_first_name,
                 'client_location': auth.client_location,
                 'client_phone_number': auth.client_phone_number,
-                'lading_bills_identifier': auth.lading_bills_identifier,
                 'agent_last_name': auth.agent_last_name,
                 'agent_first_name': auth.agent_first_name,
-                'company_proof_nif': auth.company_proof_nif,
-                'company_proof_rccm': auth.company_proof_rccm,
+                'company_proof_nif': f"{auth.company_proof_nif} - {auth.company_name}",
+                'company_proof_rccm': f"{auth.company_proof_rccm} - {auth.company_name}",
                 'company_name': auth.company_name
             }
             authorizations.append(auth_data)
