@@ -55,7 +55,6 @@ def user_home(company_id):
 
     invoices = Invoice.query.filter_by(company_id=company_id).all()    
     expenses = [expense for invoice in invoices for expense in invoice.expenses]
-    emails = fetch_emails(current_user.email_provider)
 
 
 
@@ -85,8 +84,7 @@ def user_home(company_id):
         companies=companies,
         daily_company_summary=daily_company_summary,
         total_disk_usage_mb=total_size_mb,
-        expenses=expenses,
-        emails=emails
+        expenses=expenses
     )
 
 
