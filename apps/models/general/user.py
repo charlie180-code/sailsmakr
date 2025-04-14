@@ -127,6 +127,13 @@ class User(db.Model, UserMixin):
 
     blood_group = db.Column(db.String())
 
+    signature_name = db.Column(db.String(128))
+    signature_title = db.Column(db.String(128))
+    signature_phone = db.Column(db.String(64))
+    signature_word = db.Column(db.String) # eg : Kind Regards,...
+    signature_additional_badge = db.Column(db.String)
+    signature_html = db.Column(db.Text)
+
     folders = db.relationship('Folder', backref='owner', lazy=True)
 
     @property
