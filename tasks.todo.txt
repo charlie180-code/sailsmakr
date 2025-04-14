@@ -1,8 +1,0 @@
-Careers:[]
-Ramp coding challenge;
-
-Tasks:[]
-autocomplete data with more relationship with client
-automated email sending
-regenerate letter on editing info
-better displaying sent emails
