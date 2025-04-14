@@ -101,20 +101,20 @@
                     <div class="collapse" id="MesDemandes">
                         <ul class="navbar-nav ps-3">
                             <li class="nav-item">
-                              <a class="nav-link text-white {% if request.path == url_for('order.apply_quotes', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.apply_quotes', company_id=company.id) }}">
-                                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                      <i class="material-icons opacity-10">add_circle</i>
-                                  </div>
-                                  <span class="nav-link-text ms-1">{{ _('Créer une demande') }}</span>
-                              </a>
+                                <a class="nav-link text-white {% if request.path == url_for('order.apply_quotes', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.apply_quotes', company_id=company.id) }}">
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons opacity-10">add_circle</i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">{{ _('Créer une demande') }}</span>
+                                </a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link text-white {% if request.path == url_for('order.previous_quotes', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.previous_quotes', company_id=company.id) }}">
-                                  <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                      <i class="material-icons opacity-10">history</i>
-                                  </div>
-                                  <span class="nav-link-text ms-1">{{ _('Demandes récentes') }}</span>
-                              </a>
+                                <a class="nav-link text-white {% if request.path == url_for('order.previous_quotes', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.previous_quotes', company_id=company.id) }}">
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons opacity-10">history</i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">{{ _('Demandes récentes') }}</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -129,32 +129,32 @@
                         <i class="material-icons ms-auto opacity-50 rotate-icon">keyboard_arrow_down</i>
                     </a>
                     <div class="collapse" id="MesAchats">
-                      <ul class="navbar-nav ps-3">
-                          <li class="nav-item">
-                              <a class="nav-link text-white {% if request.path == url_for('order.purchase_request', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.purchase_request', company_id=company.id) }}">
-                                  <span>
-                                      <i class="bi bi-plus-circle"></i> 
-                                  </span>
-                                  <span class="nav-link-text ms-1">{{ _('Nouveau achat') }}</span>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link text-white {% if request.path == url_for('order.previous_purchase_requests', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.previous_purchase_requests', company_id=company.id) }}">
-                                  <span>
-                                      <i class="bi bi-clock-history"></i> 
-                                  </span>
-                                  <span class="nav-link-text ms-1">{{ _('Achats récents') }}</span>
-                              </a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link text-white" href="">
-                                  <span>
-                                      <i class="bi bi-geo-alt"></i> 
-                                  </span>
-                                  <span class="nav-link-text ms-1">{{ _('Suivre mon produit') }}</span>
-                              </a>
-                          </li>
-                      </ul>
+                        <ul class="navbar-nav ps-3">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {% if request.path == url_for('order.purchase_request', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.purchase_request', company_id=company.id) }}">
+                                        <span>
+                                            <i class="bi bi-plus-circle"></i> 
+                                        </span>
+                                        <span class="nav-link-text ms-1">{{ _('Nouveau achat') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {% if request.path == url_for('order.previous_purchase_requests', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.previous_purchase_requests', company_id=company.id) }}">
+                                        <span>
+                                            <i class="bi bi-clock-history"></i> 
+                                        </span>
+                                        <span class="nav-link-text ms-1">{{ _('Achats récents') }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="">
+                                        <span>
+                                            <i class="bi bi-geo-alt"></i> 
+                                        </span>
+                                        <span class="nav-link-text ms-1">{{ _('Suivre mon produit') }}</span>
+                                    </a>
+                                </li>
+                        </ul>
                     </div>
                 </li>
               
@@ -216,14 +216,14 @@
             {% endif %}
   
             {% if current_user.is_sales() %}
-              <li class="nav-item">
-                  <a class="nav-link text-white {% if request.path == url_for('order.new_purchases', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.new_purchases', company_id=company.id) }}">
-                      <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                          <i class="material-icons opacity-10">shopping_cart</i>
-                      </div>
-                      <span class="nav-link-text ms-1">{{ _('Achats') }}</span>
-                  </a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white {% if request.path == url_for('order.new_purchases', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('order.new_purchases', company_id=company.id) }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">shopping_cart</i>
+                        </div>
+                        <span class="nav-link-text ms-1">{{ _('Achats') }}</span>
+                    </a>
+                </li>
              {% endif %}
   
   
@@ -263,24 +263,24 @@
                     </div>
                 </div>
                 <div class="collapse" id="ContactBook">
-                  <ul class="navbar-nav ps-3">
-                      <li class="nav-item">
-                          <a class="nav-link text-white {% if request.path == url_for('msg.create_contact', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('msg.create_contact', company_id=company.id) }}">
-                              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                  <i class="material-icons opacity-10">person_add</i>
-                              </div>
-                              <span class="nav-link-text ms-1">{{ _('Ajouter un contact') }}</span>
-                          </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link text-white {% if request.path == url_for('msg.view_contacts', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('msg.view_contacts', company_id=company.id) }}">
-                              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                  <i class="material-icons opacity-10">list</i>
-                              </div>
-                              <span class="nav-link-text ms-1">{{ _('Voir les contacts') }}</span>
-                          </a>
-                      </li>
-                  </ul>
+                    <ul class="navbar-nav ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-white {% if request.path == url_for('msg.create_contact', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('msg.create_contact', company_id=company.id) }}">
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons opacity-10">person_add</i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">{{ _('Ajouter un contact') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {% if request.path == url_for('msg.view_contacts', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('msg.view_contacts', company_id=company.id) }}">
+                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="material-icons opacity-10">list</i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">{{ _('Voir les contacts') }}</span>
+                                </a>
+                            </li>
+                    </ul>
                 </div>
             </li>
 
@@ -379,6 +379,16 @@
                     </ul>
                 </div>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white {% if request.path == url_for('msg.email_signature', user_id=current_user.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('msg.email_signature', company_id=company.id, user_id=current_user.id) }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">draw</i>
+                    </div>
+                    <span class="nav-link-text ms-1">{{ _('Signature') }}</span>
+                </a>
+            </li>            
+
             <li class="nav-item">
                 <a class="nav-link text-white {% if request.path == url_for('user.settings', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('user.settings', company_id=company.id) }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -391,10 +401,10 @@
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
         <div class="mx-3">
-              <a class="btn bg-light mt-4 w-100" href="{{ url_for('auth.logout') }}" type="button">
-                  <i class="bi bi-box-arrow-left"></i>
-                  {{ _('Se déconnecter') }}
-              </a>
+            <a class="btn bg-light mt-4 w-100" href="{{ url_for('auth.logout') }}" type="button">
+                <i class="bi bi-box-arrow-left"></i>
+                {{ _('Se déconnecter') }}
+            </a>
         </div>
     </div>
   </aside>
