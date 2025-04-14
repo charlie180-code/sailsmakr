@@ -5,26 +5,26 @@
 }
 /* Overlay styling */
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Transparent black */
-    z-index: 1050;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Transparent black */
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Spinner styling */
 .sk-chase {
-    z-index: 1060; /* Ensure it appears above the overlay */
+  z-index: 1060; /* Ensure it appears above the overlay */
 }
 
 /* Utility class to hide elements */
 .d-none {
-    display: none;
+  display: none;
 }
 
 .warning-messages{
@@ -268,99 +268,99 @@ place more comfortable
 }
 
 .drag-file-area {
-        border: 2px dashed #ddd;
-        padding: 40px;
-        text-align: center;
-        background-color: #f9f9f9;
-        border-radius: 15px;
-        transition: border-color 0.3s ease;
-    }
+  border: 2px dashed #ddd;
+  padding: 40px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  transition: border-color 0.3s ease;
+}
 
-    .drag-file-area:hover {
-        border-color: #007bff;
-    }
+.drag-file-area:hover {
+  border-color: #007bff;
+}
 
-    .upload-icon {
-        font-size: 48px;
-        color: #007bff;
-    }
+.upload-icon {
+  font-size: 48px;
+  color: #007bff;
+}
 
-    .dynamic-message {
-        font-size: 1.2rem;
-        color: #555;
-        margin: 15px 0;
-    }
+.dynamic-message {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 15px 0;
+}
 
-    .browse-files {
-        display: inline-block;
-        font-size: 1rem;
-        color: #007bff;
-        cursor: pointer;
-        text-decoration: underline;
-    }
+.browse-files {
+  display: inline-block;
+  font-size: 1rem;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
 
-    .browse-files input {
-        display: none;
-    }
+.browse-files input {
+  display: none;
+}
 
     
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .drag-file-area {
-            padding: 20px;
-        }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .drag-file-area {
+    padding: 20px;
+  }
 
-        .dynamic-message {
-            font-size: 1rem;
-        }
+  .dynamic-message {
+    font-size: 1rem;
+  }
 
-        .upload-icon {
-            font-size: 36px;
-        }
+  .upload-icon {
+    font-size: 36px;
+  }
 
-        .provider-logo {
-            width: 35px;
-            height: 35px;
-        }
+  .provider-logo {
+    width: 35px;
+    height: 35px;
+  }
 
-        .provider-text {
-            font-size: 0.8rem;
-        }
-    }
+  .provider-text {
+    font-size: 0.8rem;
+  }
+}
 
-    .border-blue-dots {
-        border: 2px dotted #007bff;
-        border-radius: 15px;
-    }
+.border-blue-dots {
+  border: 2px dotted #007bff;
+  border-radius: 15px;
+}
 
-    .upload-button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
+.upload-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
 
-    .cannot-upload-message {
-        color: red;
-        display: none;
-    }
+.cannot-upload-message {
+  color: red;
+  display: none;
+}
 
-    .file-block {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-    }
+.file-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
 
-    .progress-bar {
-        width: 0;
-        height: 5px;
-        background-color: #28a745;
-        margin-top: 10px;
-    }
+.progress-bar {
+  width: 0;
+  height: 5px;
+  background-color: #28a745;
+  margin-top: 10px;
+}
 
 
 .dropdown-item img {
@@ -393,6 +393,66 @@ select option img {
 #TransportCompanySuggestions .list-group-item:hover {
   background-color: #f8f9fa;
 }
+
+/****************************
+view email
+*****************************/
+/* Email list styling */
+.email-item {
+  padding: 0.75rem 1rem;
+}
+
+.email-sender {
+  font-size: 0.2rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.email-subject {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-preview {
+  font-size: 0.75rem;
+  color: #6c757d;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.email-time {
+  font-size: 0.7rem;
+  color: #adb5bd;
+  white-space: nowrap;
+}
+
+/* Modal content styling */
+.email-modal-body {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .email-item {
+    padding: 0.5rem;
+  }
+}
+
+
+/*********end view email******************/
+
+
 
 /***************************************
 emailing for container release letter
@@ -482,3 +542,54 @@ system
 end emailing for container release letter
 system
 **********************************************/
+
+
+/**
+*********************************************
+********************************************
+email signatures styling
+
+*/
+
+.signature-preview {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background: #f9f9f9;
+  min-height: 200px;
+}
+.signature-row {
+  margin-bottom: 10px;
+}
+.signature-word {
+  font-style: italic;
+}
+.signature-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.signature-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.company-logo {
+  max-height: 50px;
+}
+.badges-container {
+  display: flex;
+  gap: 10px;
+}
+.signature-badge {
+  width: 100px;
+  max-height: 200px;
+}
+.preview-header {
+  font-weight: bold;
+  color: #555;
+}
+
+/******************
+****************
+end email signatires styling
+/****************
