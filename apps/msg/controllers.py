@@ -20,6 +20,9 @@ from .. import mail, db
 from twilio.rest import Client
 from . import msg
 from flask_babel import gettext as _
+from ..auth.utils import check_internet_connection, save_file_locally
+from ..utils import save_files
+from ..user.utils import fetch_emails
 
 
 @msg.route('/contacts/<int:company_id>')
@@ -338,7 +341,7 @@ def delete_contact(contact_id):
 
 
 
-@msg.route('/get-contacts/<company_id>')
+@msg.route('/get-contacts/<int:company_id>')
 @login_required
 def get_contacts(company_id):
     company = Company.query.get_or_404(company_id)
@@ -393,7 +396,6 @@ def test_email_connection():
         return jsonify({'success': False, 'message': f'Connection failed: {str(e)}'}), 500
 
 
-
 @msg.route('/send_authorization_email', methods=['POST'])
 @login_required
 def send_authorization_email():
@@ -410,7 +412,6 @@ def send_authorization_email():
         subject = request.form.get('subject', '').strip()
         html_message = request.form.get('message', '').strip()
         attachments = parse_json_field('attachments', [])
-        
         cc_emails = parse_json_field('cc', [])
 
         if not to_emails:
@@ -452,12 +453,38 @@ def send_authorization_email():
                 'message': _('Les identifiants email ne sont pas configurés')
             }), 400
 
+        company_logo_url = current_user.company.logo_url if current_user.company else ''
+        company_title = current_user.company.title if current_user.company else ''
+
+        # Build the signature HTML
+        signature_html = f"""
+        <table style="border-collapse: collapse; margin-top: 20px;">
+            <tr><td style="padding: 2px 0;">{(current_user.signature_word or 'Kind Regards') + ','}</td></tr>
+            <tr><td style="padding: 2px 0;"><strong>{current_user.signature_name or ''}</strong></td></tr>
+            <tr><td style="padding: 2px 0;">{current_user.signature_title or ''}</td></tr>
+            <tr><td style="padding: 2px 0;">{current_user.signature_phone or ''}</td></tr>
+            <tr><td style="padding: 2px 0;">{company_title}</td></tr>
+            <tr><td style="padding: 2px 0;">
+                <img src="{company_logo_url or ''}" alt="Company Logo" style="height: 50px; margin-right: 10px;">
+                <img src="{current_user.signature_additional_badge or ''}" alt="Company Badge" style="height: 50px;">
+            </td></tr>
+        </table>
+        """
+
+        # Combine message and signature
+        full_html = f"""
+        <div>
+            {html_message}
+            {signature_html}
+        </div>
+        """
+
         msg = MIMEMultipart()
         msg['From'] = current_user.email_username
         msg['To'] = ', '.join(to_emails)
         msg['Cc'] = ', '.join(cc_emails) if cc_emails else ''
         msg['Subject'] = subject
-        msg.attach(MIMEText(html_message, 'html'))
+        msg.attach(MIMEText(full_html, 'html'))
 
         for attachment in attachments:
             try:
@@ -498,7 +525,7 @@ def send_authorization_email():
                 return jsonify({
                     'success': True,
                     'title': _('Envoyé'),
-                    'message': _('Message envoyé avec succès'),
+                    'message': _('Message envoyé'),
                     'redirect_url': url_for('order.new_quotes', company_id=current_user.company_id)
                 })
 
@@ -517,11 +544,111 @@ def send_authorization_email():
                 'title': _('Erreur SMTP'),
                 'message': f"Erreur lors de l'envoi: {str(e)}"
             }), 400
-
     except Exception as e:
-        current_app.logger.error(f"Unexpected error: {str(e)}")
+        current_app.logger.error(f"Unexpected error in send_authorization_email: {str(e)}")
         return jsonify({
             'success': False,
             'title': _('Erreur inattendue'),
             'message': _('Une erreur inattendue est survenue')
         }), 500
+    
+@msg.route('/email-signature/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def email_signature(user_id):
+    if request.method == 'POST':
+        try:
+            user = User.query.get_or_404(current_user.id)
+            
+            user.signature_name = request.form.get('name', '')
+            user.signature_title = request.form.get('title', '')
+            user.signature_phone = request.form.get('phone', '')
+            user.signature_word = request.form.get('word', '')
+            
+            if 'badges' in request.files:
+                badge_files = request.files.getlist('badges')
+                existing_badges = user.signature_additional_badge.split(',') if user.signature_additional_badge else []
+                new_badges = []
+                
+                for badge_file in badge_files:
+                    if badge_file.filename != '':
+                        if not badge_file.mimetype.startswith('image/'):
+                            continue  # Skip non-image files
+                        if badge_file.content_length > 2 * 1024 * 1024:
+                            continue  # Skip files larger than 2MB
+                        
+                        try:
+                            if check_internet_connection():
+                                saved_badge_url = save_files([badge_file], "email_signatures/badges/")[0]
+                            else:
+                                badge_filename = save_file_locally(badge_file, folder_name="static/email_signatures/badges")
+                                saved_badge_url = url_for('static', filename=f"email_signatures/badges/{badge_filename}", _external=True)
+                            
+                            new_badges.append(saved_badge_url)
+                        except Exception as e:
+                            continue  # Skip files that fail to save
+                
+                # Combine existing badges with new ones (remove duplicates if needed)
+                all_badges = list(set(existing_badges + new_badges))
+                user.signature_additional_badge = ','.join(all_badges) if all_badges else None
+            
+            db.session.commit()
+            return jsonify({
+                'success': True,
+                'title': _('Effectuée'),
+                'message': _('La signature a été bien modifiée'),
+                'badges': user.signature_additional_badge.split(',') if user.signature_additional_badge else []
+            })
+            
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500
+
+    user = User.query.get_or_404(current_user.id)
+    company = Company.query.get_or_404(current_user.company_id)
+    
+    badges = user.signature_additional_badge.split(',') if user.signature_additional_badge else []
+
+    
+    return render_template('dashboard/@support_team/email_signature.html', 
+        user=user, 
+        company=company,
+        badges=badges
+    )
+
+
+
+@msg.route("/send_reply", methods=["POST"])
+@login_required
+def send_reply():
+    try:
+        to_email = request.form.get("to")
+        subject = request.form.get("subject")
+        body = request.form.get("replyBody")
+        
+        smtp_server = current_user.smtp_server or f"smtp.{current_user.email_provider}.com"
+        smtp_port = current_user.smtp_port or 587
+        email_username = current_user.email_username or current_user.email
+        email_password = current_user.email_password
+        
+        msg = MIMEText(body)
+        msg["Subject"] = subject
+        msg["From"] = email_username
+        msg["To"] = to_email
+        
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(email_username, email_password)
+            server.send_message(msg)
+        
+        return jsonify({"success": True})
+    
+    except Exception as e:
+        current_app.logger.error(f"Error sending email: {str(e)}")
+        return jsonify({"success": False, "error": str(e)}), 500
+    
+
+@msg.route("/get_emails")
+@login_required
+def get_emails():
+    emails = fetch_emails(current_user)
+    return jsonify(emails)
