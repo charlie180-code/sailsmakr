@@ -1,72 +1,108 @@
-import os
-import base64
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.discovery import build
-from dotenv import load_dotenv
+import imaplib
+import email
+from email.header import decode_header
+import smtplib
+from datetime import datetime, timedelta
+from flask import current_app
+import threading
+import re
 
-# Load environment variables from the .env file
-load_dotenv()
-
-# Define the SCOPES for Gmail access
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-
-def fetch_emails(provider='gmail', max_results=5, max_body_length=100):
-    emails = []
-    
+def fetch_emails(user, limit=5):
     try:
-        # Load OAuth2 credentials from environment variables
-        creds = Credentials(
-            None,
-            refresh_token=os.getenv('GMAIL_REFRESH_TOKEN'),
-            client_id=os.getenv('GMAIL_CLIENT_ID'),
-            client_secret=os.getenv('GMAIL_CLIENT_SECRET'),
-            token_uri=os.getenv('GOOGLE_TOKEN_URI'),
-            scopes=SCOPES
-        )
+        # Get user email settings
+        imap_server = user.imap_server or f"imap.{user.email_provider}.com"
+        imap_port = user.imap_port or 993
+        email_username = user.email_username or user.email
+        email_password = user.email_password
 
-        # If credentials are expired, refresh them
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+        # Connect to the IMAP server
+        mail = imaplib.IMAP4_SSL(imap_server, imap_port)
+        mail.login(email_username, email_password)
+        mail.select("inbox")
 
-        # Use the Gmail API
-        service = build('gmail', 'v1', credentials=creds)
+        # Search for latest emails
+        status, messages = mail.search(None, "ALL")
+        if status != "OK":
+            return []
 
-        # Get the list of messages from the inbox
-        results = service.users().messages().list(userId='me', maxResults=max_results).execute()
-        messages = results.get('messages', [])
+        email_ids = messages[0].split()[-limit:]  # Get only the latest 'limit' emails
+        emails = []
 
-        for msg in messages:
-            msg_data = service.users().messages().get(userId='me', id=msg['id']).execute()
+        for email_id in reversed(email_ids):  # Process newest first
+            status, msg_data = mail.fetch(email_id, "(RFC822)")
+            if status != "OK":
+                continue
 
-            # Decode email subject and sender
-            headers = msg_data['payload']['headers']
-            subject = next(header['value'] for header in headers if header['name'] == 'Subject')
-            sender = next(header['value'] for header in headers if header['name'] == 'From')
-            
-            # Get the email body
-            parts = msg_data['payload'].get('parts', [])
+            raw_email = msg_data[0][1]
+            msg = email.message_from_bytes(raw_email)
+
+            subject, encoding = decode_header(msg["Subject"])[0]
+            if isinstance(subject, bytes):
+                subject = subject.decode(encoding or "utf-8")
+
+            sender, encoding = decode_header(msg.get("From"))[0]
+            if isinstance(sender, bytes):
+                sender = sender.decode(encoding or "utf-8")
+
             body = ""
-            if parts:
-                for part in parts:
-                    if part['mimeType'] == 'text/plain':
-                        body = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
-                        break  # Get the first text/plain part
+            if msg.is_multipart():
+                for part in msg.walk():
+                    content_type = part.get_content_type()
+                    content_disposition = str(part.get("Content-Disposition"))
+                    try:
+                        body = part.get_payload(decode=True).decode()
+                    except:
+                        pass
+                    if content_type == "text/plain" and "attachment" not in content_disposition:
+                        break
+            else:
+                body = msg.get_payload(decode=True).decode()
 
-            # Truncate the email body to the specified max length
-            if len(body) > max_body_length:
-                body = body[:max_body_length] + '...'
+            date_tuple = email.utils.parsedate_tz(msg["Date"])
+            if date_tuple:
+                local_date = datetime.fromtimestamp(email.utils.mktime_tz(date_tuple))
+                formatted_date = local_date.strftime("%b %d, %Y %I:%M %p")
+            else:
+                formatted_date = msg["Date"]
+
+            body = clean_email_body(body)
 
             emails.append({
-                'sender': sender,
-                'subject': subject,
-                'body': body,  # Truncated body for list view
-                'full_body': body,  # Store the full body for modal view
-                'timestamp': msg_data['internalDate'],
-                'sender_profile_picture': None  # Can be added if needed
+                "id": email_id.decode(),
+                "sender": sender,
+                "subject": subject[:100] + "..." if len(subject) > 100 else subject,
+                "body": body[:200] + "..." if len(body) > 200 else body,
+                "full_body": body,
+                "timestamp": formatted_date,
+                "sender_profile_picture": None
             })
 
-    except Exception as e:
-        print(f"Error fetching emails: {str(e)}")
+        mail.close()
+        mail.logout()
+        return emails
 
-    return emails
+    except Exception as e:
+        current_app.logger.error(f"Error fetching emails: {str(e)}")
+        return []
+    
+
+def clean_email_body(body):
+    """Clean and format email body text"""
+    if not body:
+        return ""
+    
+    # Remove excessive whitespace
+    body = ' '.join(body.split())
+    
+    # Remove common email signatures (simple pattern matching)
+    signature_patterns = [
+        r'--\s*\n.*',
+        r'________________.*',
+        r'Sent from my.*',
+        r'Best regards,.*'
+    ]
+    
+    for pattern in signature_patterns:
+        body = re.sub(pattern, '', body, flags=re.DOTALL|re.IGNORECASE)
+    
+    return body.strip()
