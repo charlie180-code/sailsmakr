@@ -8,17 +8,14 @@ venv
 *.sublime*
 node_modules
 static/data
-./sailsmakr.todo
-./questions.txt
-sails.todo
-tasks.todo.txt
+tasks.todo
 dist
 /linux-venv
 instance
-./win-venv
 task.todo
 server
 screenshots
+migrations
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
