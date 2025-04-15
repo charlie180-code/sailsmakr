@@ -189,7 +189,7 @@ def settings(company_id):
         # Handle password change
         if old_password and new_password:
             if current_user.verify_password(old_password):
-                current_user.password = generate_password_hash(new_password)
+                current_user.password_hash = generate_password_hash(new_password)
             else:
                 flash(_("L'ancien mot de passe est incorrect."), "error")
                 return redirect(url_for('user.settings', company_id=company.id))
