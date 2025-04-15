@@ -264,18 +264,6 @@ Sailsmakr plans to use **Jenkins** for continuous integration and automated test
 
 ---
 
-## Roadmap
-
-- **Code as Infrastructure (IaC)**: Ensuring that infrastructure is defined and maintained programmatically using tools such as **Terraform** for provsionning infrastucture and **Ansible** for configuring this infrastructure.
-- **Kubernetes (K8s)**: We have so many microservices that needs to be scaled with kubernetes.
-- **Jenkins**: CI/CD tool used for automated testing and continuous integration.
-- **NodeJS and Express**: for some features like task management we will add create a separate NodeJS microservice due to its asynchronous nature and ease of integration.
-- **MongoDB**: Document oriented database in order to deal with some type of data
-- **AI & Machine Learning**: AI email writing assitant based on industry
-- **FedEx & Freightos**: APIs for providing real-time shipping rates, tracking information, and freight suggestions, ensuring that customers get the best shipping options.
-
----
-
 ## License
 
 Sailsmakr is the sole owner of all source code. No code may be redistributed or reproduced without explicit permission from us.
