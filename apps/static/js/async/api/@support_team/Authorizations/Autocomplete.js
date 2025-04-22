@@ -11,17 +11,16 @@ function debounce(func, delay) {
         timeout = setTimeout(() => func.apply(context, args), delay);
     };
 }
+
 const autocompleteFields = [
-    { id: 'clientLastName', field: 'client_last_name', datalist: 'clientLastNameSuggestions' },
-    { id: 'clientFirstName', field: 'client_first_name', datalist: 'clientFirstNameSuggestions' },
-    { id: 'clientLocation', field: 'client_location', datalist: 'clientLocationSuggestions' },
-    { id: 'companyPhone', field: 'client_phone_number', displayField: 'client_phone_number_display', datalist: 'clientPhoneSuggestions' },
-    { id: 'agentLastName', field: 'agent_last_name', datalist: 'agentLastNameSuggestions' },
-    { id: 'agentFirstName', field: 'agent_first_name', datalist: 'agentFirstNameSuggestions' },
-    { id: 'companyPhone', field: 'client_phone_number', displayField: 'client_phone_number_display', datalist: 'companyPhoneSuggestions'},
-    { id: 'companyNif', field: 'company_proof_nif', displayField: 'company_proof_nif_display', datalist: 'companyNifSuggestions' },
-    { id: 'companyRccm', field: 'company_proof_rccm', displayField: 'company_proof_rccm_display', datalist: 'companyRccmSuggestions' },
-    { id: 'companyName', field: 'company_name', datalist: 'companyNameSuggestions' }
+    { id: 'clientLastName', field: 'client_last_name', datalist: 'clientLastNameSuggestions', group: 'person' },
+    { id: 'clientFirstName', field: 'client_first_name', datalist: 'clientFirstNameSuggestions', group: 'person' },
+    { id: 'clientLocation', field: 'client_location', datalist: 'clientLocationSuggestions', group: 'person' },
+    { id: 'clientPhone', field: 'client_phone_number', displayField: 'client_phone_number_display', datalist: 'clientPhoneSuggestions', group: 'person' },
+    { id: 'companyPhone', field: 'client_phone_number', displayField: 'client_phone_number_display', datalist: 'companyPhoneSuggestions', group: 'company' },
+    { id: 'companyNif', field: 'company_proof_nif', displayField: 'company_proof_nif_display', datalist: 'companyNifSuggestions', group: 'company' },
+    { id: 'companyRccm', field: 'company_proof_rccm', displayField: 'company_proof_rccm_display', datalist: 'companyRccmSuggestions', group: 'company' },
+    { id: 'companyName', field: 'company_name', datalist: 'companyNameSuggestions', group: 'company' }
 ];
 
 autocompleteFields.forEach(item => {
@@ -40,7 +39,9 @@ autocompleteFields.forEach(item => {
                         
                         data.forEach(auth => {
                             const option = document.createElement('option');
-                            option.value = item.displayField ? auth[item.displayField] || auth[item.field] : auth[item.field] || '';
+                            const displayValue = item.displayField ? auth[item.displayField] || auth[item.field] : auth[item.field] || '';
+                            option.value = displayValue;
+                            option.dataset.value = auth[item.field] || '';
                             option.dataset.json = JSON.stringify(auth);
                             datalist.appendChild(option);
                         });
@@ -56,21 +57,30 @@ autocompleteFields.forEach(item => {
             if (!datalist) return;
             
             const selectedOption = Array.from(datalist.options).find(option => {
-                const optionValue = option.value.split(' - ')[0];
-                const inputValue = e.target.value.split(' - ')[0];
-                return optionValue === inputValue;
+                const optionParts = option.value.split(' - ');
+                const inputParts = e.target.value.split(' - ');
+                return optionParts[0] === inputParts[0];
             });
             
             if (selectedOption && selectedOption.dataset.json) {
                 try {
+                    if (selectedOption.dataset.value) {
+                        input.value = selectedOption.dataset.value;
+                    }
+                    
                     const data = JSON.parse(selectedOption.dataset.json);
+                    
+                    // Only update fields in the same group
                     autocompleteFields.forEach(field => {
-                        if (field.id !== item.id && data[field.field]) {
+                        // Skip the current field
+                        if (field.id === item.id) return;
+                        
+                        // Only update fields in the same group
+                        if (item.group && field.group === item.group) {
                             const el = document.getElementById(field.id);
                             if (el) {
-                                if (field.displayField && data[field.displayField]) {
-                                    el.value = data[field.displayField];
-                                } else {
+                                // Set the actual value, not the display value
+                                if (data[field.field]) {
                                     el.value = data[field.field];
                                 }
                             }

@@ -439,6 +439,7 @@ def prepare_send_container_release_letter(quote_id, company_id):
         company=company
     )
 
+
 @order.route('/search-authorizations/<int:company_id>', methods=['GET'])
 def search_authorizations(company_id):
     term = request.args.get('term', '').strip()
@@ -464,26 +465,26 @@ def search_authorizations(company_id):
             Authorization.company_id == company_id
         )
         
-        results = Authorization.query.filter(filter_condition).limit(20).all()
+        result = Authorization.query.filter(filter_condition).first()
         
-        authorizations = []
-        for auth in results:
-            auth_data = {
-                'client_last_name': auth.client_last_name,
-                'client_first_name': auth.client_first_name,
-                'client_location': auth.client_location,
-                'client_phone_number': auth.client_phone_number,
-                'client_phone_number_display': f"{auth.client_phone_number} - {auth.company_name}",
-                'agent_last_name': auth.agent_last_name,
-                'agent_first_name': auth.agent_first_name,
-                'company_proof_nif': auth.company_proof_nif,
-                'company_proof_nif_display': f"{auth.company_proof_nif} - {auth.company_name}",
-                'company_proof_rccm': auth.company_proof_rccm,
-                'company_proof_rccm_display': f"{auth.company_proof_rccm} - {auth.company_name}",
-                'company_name': auth.company_name
-            }
-            authorizations.append(auth_data)
-        return jsonify(authorizations)
+        if not result:
+            return jsonify([])
+            
+        auth_data = {
+            'client_last_name': result.client_last_name,
+            'client_first_name': result.client_first_name,
+            'client_location': result.client_location,
+            'client_phone_number': result.client_phone_number,
+            'client_phone_number_display': f"{result.client_phone_number} - {result.client_last_name}",
+            'agent_last_name': result.agent_last_name,
+            'agent_first_name': result.agent_first_name,
+            'company_proof_nif': result.company_proof_nif,
+            'company_proof_nif_display': f"{result.company_proof_nif} - {result.company_name}",
+            'company_proof_rccm': result.company_proof_rccm,
+            'company_proof_rccm_display': f"{result.company_proof_rccm} - {result.company_name}",
+            'company_name': result.company_name
+        }
+        return jsonify([auth_data])
             
     except Exception as e:
         return jsonify([])
