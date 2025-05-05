@@ -138,6 +138,43 @@
         </div>
 
 
+        <!-- Sector Selection with Descriptive Text -->
+        <div class="col-span-6">
+          <label for="Category" class="block text-sm font-medium text-gray-700">
+            {{ _('Dites-nous comment vous prévoyez d\'utiliser nos applications') }} <span class="text-red-500">*</span>
+          </label>
+
+          <!-- Sector Selection with Descriptive Text -->
+          <div class="mt-4 space-y-6">
+              <!-- Academics -->
+                <label class="block p-4 border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer peer-checked:border-blue-600">
+                  <div class="flex items-center">
+                    <input type="radio" name="category" id="sector-academics" value="Education" required>
+                    <span class="text-lg font-medium text-gray-900 ms-2">{{ _('Académie') }}</span>
+                  </div>
+                  <p class="mt-1 text-sm text-gray-700">
+                    {{ _('Destiné aux établissements d\'enseignement, nos outils permettent la gestion complète des étudiants, du personnel et des ressources éducatives, facilitant ainsi le fonctionnement administratif et académique.') }}
+                  </p>
+                </label>
+
+              <!-- Shipping -->
+              <label class="block p-4 border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer peer-checked:border-blue-600">
+                <div class="flex items-center">
+                  <input class="peer" type="radio" name="category" id="sector-shipping" value="Shipping">
+                  <span class="text-lg font-medium text-gray-900 ms-2">{{ _('Dropshipping') }}</span>
+                </div>
+                <p class="mt-1 text-sm text-gray-700">
+                  {{ _('Conçus pour les entreprises de logistique, nos outils offrent des solutions pour la gestion de la chaîne d\'approvisionnement, le suivi des expéditions et l\'optimisation des opérations de logistique, de transit et de transport.') }}
+                </p>
+              </label>
+          </div>
+
+          <p class="text-red-500 hidden" id="CategoryEmptyError">
+              {{ _('Veuillez entrer votre secteur d\'activité pour continuer') }}
+          </p>
+        </div>
+
+
 
 
       
