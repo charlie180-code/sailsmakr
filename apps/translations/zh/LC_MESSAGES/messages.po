@@ -51,7 +51,7 @@ msgstr ""
 
 #: templates/api/@support_team/employees/edit_employee_infos.html:2
 #, fuzzy
-msgid "Modifier les infos employé : Sailsmakr"
+msgid "Modifier les infos employé : Rumbu"
 msgstr "修改员工信息：Afrilog"
 
 #: templates/api/@support_team/employees/edit_employee_infos.html:12
@@ -186,7 +186,7 @@ msgstr "回复请求"
 
 #: templates/api/@support_team/jobs/create_job.html:2
 #, fuzzy
-msgid "Créer une offre d'emploi - Sailsmakr"
+msgid "Créer une offre d'emploi - Rumbu"
 msgstr "创建职位 - Afrilog"
 
 #: templates/api/@support_team/jobs/create_job.html:16
@@ -323,7 +323,7 @@ msgstr "编辑报价"
 
 #: templates/api/@support_team/jobs/edit_job.html:3
 #, fuzzy
-msgid "Sailsmakr"
+msgid "Rumbu"
 msgstr "薪资"
 
 #: templates/api/@support_team/jobs/edit_job.html:9
@@ -336,7 +336,7 @@ msgstr "标题"
 
 #: templates/api/@support_team/notice/create_notice.html:2
 #, fuzzy
-msgid "Ajouter une nouvelle note : Sailsmakr"
+msgid "Ajouter une nouvelle note : Rumbu"
 msgstr "添加新笔记：Afrilog"
 
 #: templates/api/@support_team/notice/create_notice.html:17
@@ -402,7 +402,7 @@ msgstr "发布"
 
 #: templates/api/customers/authorizations/apply.html:2
 #, fuzzy
-msgid "Formulaire de demande de procuration : Sailsmakr"
+msgid "Formulaire de demande de procuration : Rumbu"
 msgstr "授权申请表单：Afrilog"
 
 #: templates/api/customers/authorizations/apply.html:16
@@ -516,7 +516,7 @@ msgid "Articles enregistrés - Afrilog"
 msgstr "已保存文章 - Afrilog"
 
 #: templates/api/customers/contacts/create_contact.html:4
-msgid "Ajouter un contact : Sailsmakr"
+msgid "Ajouter un contact : Rumbu"
 msgstr ""
 
 #: templates/api/customers/contacts/create_contact.html:20
@@ -703,7 +703,7 @@ msgstr "关闭"
 
 #: templates/api/customers/goods/purchase_request.html:2
 #, fuzzy
-msgid "Passer une commande : Sailsmakr"
+msgid "Passer une commande : Rumbu"
 msgstr "提交订单：Afrilog"
 
 #: templates/api/customers/goods/purchase_request.html:17
@@ -981,7 +981,7 @@ msgstr "新消息"
 
 #: templates/auth/layout.html:5 templates/auth/login.html:2
 #, fuzzy
-msgid "Sailsmakr : Se connecter"
+msgid "Rumbu : Se connecter"
 msgstr "Afrilog：登录"
 
 #: templates/auth/login.html:8 templates/auth/login.html:110
@@ -1046,7 +1046,7 @@ msgstr "在这里创建帐户"
 
 #: templates/auth/signup.html:2
 #, fuzzy
-msgid "Sailsmakr : Créer un nouveau compte"
+msgid "Rumbu : Créer un nouveau compte"
 msgstr "Afrilog：创建新帐户"
 
 #: templates/auth/signup.html:8
@@ -1129,7 +1129,7 @@ msgstr "在这里登录"
 
 #: templates/dashboard/applied_jobs_listing.html:2
 #, fuzzy
-msgid "Mes Candidatures : Sailsmakr"
+msgid "Mes Candidatures : Rumbu"
 msgstr "应聘表格：Afrilog"
 
 #: templates/dashboard/applied_jobs_listing.html:6
@@ -1170,7 +1170,7 @@ msgstr ""
 
 #: templates/dashboard/calculator.html:2
 #, fuzzy
-msgid "Calculatrice : Sailsmakr"
+msgid "Calculatrice : Rumbu"
 msgstr "计算器：Afrilog"
 
 #: templates/dashboard/calculator.html:17
@@ -1209,7 +1209,7 @@ msgstr "MyAfrilog：仪表板"
 
 #: templates/dashboard/jobs_listing.html:2
 #, fuzzy
-msgid "Nouvelles offres d'emploi : Sailsmakr"
+msgid "Nouvelles offres d'emploi : Rumbu"
 msgstr "Afrilog"
 
 #: templates/dashboard/jobs_listing.html:20
@@ -1246,7 +1246,7 @@ msgstr "申请"
 #: templates/dashboard/customers/inbox.html:4
 #: templates/dashboard/new_messages.html:2
 #, fuzzy
-msgid "Boîte de réception : Sailsmakr"
+msgid "Boîte de réception : Rumbu"
 msgstr "Afrilog的收件箱"
 
 #: templates/dashboard/customers/inbox.html:22
@@ -1257,7 +1257,7 @@ msgstr "收件箱"
 
 #: templates/dashboard/sent_messages.html:2
 #, fuzzy
-msgid "Messages envoyés : Sailsmakr"
+msgid "Messages envoyés : Rumbu"
 msgstr "Afrilog的已发送消息"
 
 #: templates/dashboard/sent_messages.html:19
@@ -1325,12 +1325,12 @@ msgstr ""
 
 #: templates/dashboard/user_home.html:2
 #, fuzzy
-msgid "MySailsmakr : Accueil"
+msgid "MyRumbu : Accueil"
 msgstr "MyAfrilog：首页"
 
 #: templates/dashboard/@support_team/ads.html:2
 #, fuzzy
-msgid "Campagnes pub : Sailsmakr"
+msgid "Campagnes pub : Rumbu"
 msgstr "广告活动：Afrilog"
 
 #: templates/dashboard/@support_team/ads.html:14
@@ -1484,12 +1484,12 @@ msgstr "输入广告活动目标..."
 
 #: templates/dashboard/@support_team/applicant_desc.html:6
 #: templates/dashboard/@support_team/quote_desc.html:6
-msgid " - Sailsmakr"
+msgid " - Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/applicants_list.html:2
 #, fuzzy
-msgid "Applications Récentes : Sailsmakr"
+msgid "Applications Récentes : Rumbu"
 msgstr "最近申请：Afrilog"
 
 #: templates/dashboard/@support_team/applicants_list.html:5
@@ -1541,7 +1541,7 @@ msgstr "打印文件"
 
 #: templates/dashboard/@support_team/calendar.html:3
 #, fuzzy
-msgid "Calendrier : Sailsmakr"
+msgid "Calendrier : Rumbu"
 msgstr "日历：Afrilog"
 
 #: templates/dashboard/@support_team/calendar.html:17
@@ -1552,7 +1552,7 @@ msgstr "日历"
 
 #: templates/dashboard/@support_team/employees_listing.html:2
 #, fuzzy
-msgid "Table des employés : Sailsmakr"
+msgid "Table des employés : Rumbu"
 msgstr "员工表：Afrilog"
 
 #: templates/dashboard/@support_team/employees_listing.html:16
@@ -1578,7 +1578,7 @@ msgid "Imprimer carte"
 msgstr "打印卡片"
 
 #: templates/dashboard/@support_team/events.html:3
-msgid "Evènements : Sailsmakr"
+msgid "Evènements : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/events.html:17
@@ -1602,7 +1602,7 @@ msgstr "开始"
 
 #: templates/dashboard/@support_team/finance_reports.html:4
 #, fuzzy
-msgid "Rapport financier : Sailsmakr"
+msgid "Rapport financier : Rumbu"
 msgstr "财务报告：Afrilog"
 
 #: templates/dashboard/@support_team/finance_reports.html:20
@@ -1615,7 +1615,7 @@ msgid "Rapport financier"
 msgstr "财务报告"
 
 #: templates/dashboard/@support_team/folders.html:2
-msgid "Dossiers : Sailsmakr"
+msgid "Dossiers : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/folders.html:14
@@ -1899,7 +1899,7 @@ msgstr "招聘"
 
 #: templates/dashboard/@support_team/invoices.html:3
 #, fuzzy
-msgid "Factures : Sailsmakr"
+msgid "Factures : Rumbu"
 msgstr "发票：Afrilog"
 
 #: templates/dashboard/@support_team/invoices.html:17
@@ -1962,12 +1962,12 @@ msgid "Ajouter une description supplémentaire"
 msgstr "添加附加描述"
 
 #: templates/dashboard/@support_team/job_details.html:6
-msgid "- Sailsmakr"
+msgid "- Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/marketplace.html:4
 #, fuzzy
-msgid "Marketplace : Sailsmakr"
+msgid "Marketplace : Rumbu"
 msgstr "市场：Afrilog"
 
 #: templates/dashboard/@support_team/marketplace.html:23
@@ -1976,7 +1976,7 @@ msgstr "市场"
 
 #: templates/dashboard/@support_team/my_task.html:2
 #, fuzzy
-msgid "Mes tâches : Sailsmakr"
+msgid "Mes tâches : Rumbu"
 msgstr "我的任务：Afrilog"
 
 #: templates/dashboard/@support_team/my_task.html:14
@@ -1993,7 +1993,7 @@ msgstr "分配给"
 
 #: templates/dashboard/@support_team/new_purchases.html:3
 #, fuzzy
-msgid "Nouveaux achats : Sailsmakr"
+msgid "Nouveaux achats : Rumbu"
 msgstr "新采购：Afrilog"
 
 #: templates/dashboard/@support_team/new_purchases.html:16
@@ -2079,7 +2079,7 @@ msgstr "有用链接"
 
 #: templates/dashboard/@support_team/previous_created_jobs.html:4
 #, fuzzy
-msgid "Offres publiées : Sailsmakr"
+msgid "Offres publiées : Rumbu"
 msgstr "已发布的职位：Afrilog"
 
 #: templates/dashboard/@support_team/previous_created_jobs.html:24
@@ -2089,7 +2089,7 @@ msgstr "已发布的职位"
 
 #: templates/dashboard/@support_team/previous_notes.html:4
 #, fuzzy
-msgid "Notes récentes : Sailsmakr"
+msgid "Notes récentes : Rumbu"
 msgstr "最近的备注：Afrilog"
 
 #: templates/dashboard/@support_team/previous_notes.html:23
@@ -2120,7 +2120,7 @@ msgid "Mettre à jour"
 msgstr "更新"
 
 #: templates/dashboard/@support_team/products.html:4
-msgid "Produits : Sailsmakr"
+msgid "Produits : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/products.html:18
@@ -2299,7 +2299,7 @@ msgstr "请输入您的产品名称"
 
 #: templates/dashboard/@support_team/quotes_list.html:4
 #, fuzzy
-msgid "Demandes de procurations : Sailsmakr"
+msgid "Demandes de procurations : Rumbu"
 msgstr "采购申请：Afrilog"
 
 #: templates/dashboard/@support_team/quotes_list.html:18
@@ -2358,7 +2358,7 @@ msgid "Modifier la demande de devis"
 msgstr "编辑报价申请"
 
 #: templates/dashboard/@support_team/stores.html:3
-msgid "Magasins: Sailsmakr"
+msgid "Magasins: Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/stores.html:15
@@ -2426,7 +2426,7 @@ msgstr "修改信息"
 
 #: templates/dashboard/@support_team/tasks.html:3
 #, fuzzy
-msgid "Tâches : Sailsmakr"
+msgid "Tâches : Rumbu"
 msgstr "任务：Afrilog"
 
 #: templates/dashboard/@support_team/tasks.html:15
@@ -2594,7 +2594,7 @@ msgstr "在这里，您可以管理和组织分配给您的任务。"
 
 #: templates/dashboard/customers/live_tracking.html:4
 #, fuzzy
-msgid "Suivre mon colis : Sailsmakr"
+msgid "Suivre mon colis : Rumbu"
 msgstr "跟踪我的包裹：Afrilog"
 
 #: templates/dashboard/customers/live_tracking.html:23
@@ -2637,7 +2637,7 @@ msgstr "跟踪"
 
 #: templates/dashboard/customers/previous_purchase_requests.html:2
 #, fuzzy
-msgid "Commandes récentes : Sailsmakr"
+msgid "Commandes récentes : Rumbu"
 msgstr "最近的订单：Afrilog"
 
 #: templates/dashboard/customers/previous_purchase_requests.html:19
@@ -2700,7 +2700,7 @@ msgstr "二维码"
 
 #: templates/dashboard/customers/previous_quotes.html:2
 #, fuzzy
-msgid "Demandes récentes : Sailsmakr"
+msgid "Demandes récentes : Rumbu"
 msgstr "最近的请求：Afrilog"
 
 #: templates/dashboard/customers/previous_quotes.html:16
@@ -2767,16 +2767,16 @@ msgstr "客户身份证"
 
 #: templates/dashboard/customers/saved_jobs_listing.html:6
 #, fuzzy
-msgid "Postes Sauvegardés - Sailsmakr"
+msgid "Postes Sauvegardés - Rumbu"
 msgstr "已保存职位 - Afrilog"
 
 #: templates/dashboard/customers/tracked_goods_listing.html:6
 #, fuzzy
-msgid "Liste des colis que vous suivez en temps réel - Sailsmakr"
+msgid "Liste des colis que vous suivez en temps réel - Rumbu"
 msgstr "您实时跟踪的包裹列表 - Afrilog"
 
 #: templates/dashboard/customers/view_contacts.html:4
-msgid "Contacts : Sailsmakr"
+msgid "Contacts : Rumbu"
 msgstr ""
 
 #: templates/dashboard/customers/view_contacts.html:23

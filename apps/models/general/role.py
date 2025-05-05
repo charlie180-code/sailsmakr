@@ -33,9 +33,9 @@ class Role(db.Model):
         """
         roles = {
             'SAILSMARK_Ceo': {'description': "Oversee sailsmark operations and strategy", 'position': 'CEO'},
-            'Sailsmakr_HR_Manager': {'description': 'Manage human resources tasks and employee relations for sailsmakr', 'position': 'HR Manager'},
-            'Sailsmakr_Accountant': {'description': 'Handle financial tasks, bookkeeping, and transactions for sailsmakr', 'position': 'Accountant'},
-            'Sailsmakr_Sales_Director': {'description': 'Oversee sales operations and strategies for Sailsmakr', 'position': 'Sailsmakr Sales Director'},
+            'Rumbu_HR_Manager': {'description': 'Manage human resources tasks and employee relations for sailsmakr', 'position': 'HR Manager'},
+            'Rumbu_Accountant': {'description': 'Handle financial tasks, bookkeeping, and transactions for sailsmakr', 'position': 'Accountant'},
+            'Rumbu_Sales_Director': {'description': 'Oversee sales operations and strategies for Rumbu', 'position': 'Rumbu Sales Director'},
             'CEO': {'description': 'Oversee all company operations and strategy', 'position': 'responsible'},
             'HR Manager': {'description': 'Manage human resources tasks and employee relations', 'position': 'responsible'},
             'Accountant': {'description': 'Handle financial tasks, bookkeeping, and transactions', 'position': 'responsible'},
