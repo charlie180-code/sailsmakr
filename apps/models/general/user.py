@@ -179,17 +179,17 @@ class User(db.Model, UserMixin):
 
     def assign_role(self):
         roles = {
-            current_app.config['SAILSMAKR_CEO']:'SAILSMARK_Ceo',
-            current_app.config['SAILSMAKR_HR_MANAGER']:'Sailsmakr_HR_Manager',
-            current_app.config['SAILSMAKR_ACCOUNTANT']:'Sailsmakr_Accountant',
+            current_app.config['RUMBU_CEO']:'SAILSMARK_Ceo',
+            current_app.config['RUMBU_HR_MANAGER']:'Rumbu_HR_Manager',
+            current_app.config['RUMBU_ACCOUNTANT']:'Rumbu_Accountant',
         }
-        agents_emails = os.getenv("SAILSMAKR_AGENTS_EMAILS")
-        SAILSMAKR_AGENTS_EMAILS = agents_emails.split(',')
+        agents_emails = os.getenv("RUMBU_AGENTS_EMAILS")
+        RUMBU_AGENTS_EMAILS = agents_emails.split(',')
 
         if self.email in roles:
             role_name = roles[self.email]
             self.role = Role.query.filter_by(name=role_name).first()
-        elif self.email in SAILSMAKR_AGENTS_EMAILS:
+        elif self.email in RUMBU_AGENTS_EMAILS:
             self.role = Role.query.filter_by(name='Employee').first()
         else:
             self.role = Role.query.filter_by(default=True).first()
@@ -252,9 +252,9 @@ class User(db.Model, UserMixin):
     def is_sales(self):
         return self.has_position('Sales Manager')
 
-    def is_sailsmakr_sales_director(self):
-        """Check if the current user is the Sailsmakr Sales Director."""
-        sailsmakr_sales_director_email = current_app.config['SAILSMAKR_SALES_DIRECTOR']
+    def is_rumbu_sales_director(self):
+        """Check if the current user is the Rumbu Sales Director."""
+        sailsmakr_sales_director_email = current_app.config['RUMBU_SALES_DIRECTOR']
         return current_user.email == sailsmakr_sales_director_email
     
 
@@ -321,7 +321,7 @@ class User(db.Model, UserMixin):
         )
     
     def is_sailsmakr_sales(email):
-        sales_director = os.getenv('SAILSMAKR_SALES_DIRECTOR')
+        sales_director = os.getenv('RUMBU_SALES_DIRECTOR')
 
         if email == sales_director:
             return True

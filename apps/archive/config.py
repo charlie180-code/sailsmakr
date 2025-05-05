@@ -11,11 +11,11 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    SAILSMAKR_CEO = os.environ.get('SAILSMAKR_CEO')
-    SAILSMAKR_HR_MANAGER = os.environ.get('SAILSMAKR_HR_MANAGER')
-    SAILSMAKR_ACCOUNTANT = os.environ.get('SAILSMAKR_ACCOUNTANT')
-    SAILSMAKR_SALES_DIRECTOR = os.environ.get('SAILSMAKR_SALES_DIRECTOR')
-    SAILSMAKR_AGENTS_EMAILS = os.environ.get('SAILSMAKR_AGENTS_EMAILS')
+    RUMBU_CEO = os.environ.get('RUMBU_CEO')
+    RUMBU_HR_MANAGER = os.environ.get('RUMBU_HR_MANAGER')
+    RUMBU_ACCOUNTANT = os.environ.get('RUMBU_ACCOUNTANT')
+    RUMBU_SALES_DIRECTOR = os.environ.get('RUMBU_SALES_DIRECTOR')
+    RUMBU_AGENTS_EMAILS = os.environ.get('RUMBU_AGENTS_EMAILS')
     BABEL_DEFAULT_LOCALE = 'fr'
     BABEL_SUPPORTED_LOCALES = ['en', 'fr', 'de', 'zh', 'ru', 'tr']
     BABEL_TRANSLATION_DIRECTORIES = './translations'

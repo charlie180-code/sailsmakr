@@ -51,7 +51,7 @@ msgstr ""
 
 #: templates/api/@support_team/employees/edit_employee_infos.html:2
 #, fuzzy
-msgid "Modifier les infos employé : Sailsmakr"
+msgid "Modifier les infos employé : Rumbu"
 msgstr "Modifier les informations de l'employé : Afrilog"
 
 #: templates/api/@support_team/employees/edit_employee_infos.html:12
@@ -190,7 +190,7 @@ msgstr "Répondre à la demande"
 
 #: templates/api/@support_team/jobs/create_job.html:2
 #, fuzzy
-msgid "Créer une offre d'emploi - Sailsmakr"
+msgid "Créer une offre d'emploi - Rumbu"
 msgstr "Créer une offre d'emploi - Afrilog"
 
 #: templates/api/@support_team/jobs/create_job.html:16
@@ -327,7 +327,7 @@ msgstr "Modifier l'Offre"
 
 #: templates/api/@support_team/jobs/edit_job.html:3
 #, fuzzy
-msgid "Sailsmakr"
+msgid "Rumbu"
 msgstr "Salaire"
 
 #: templates/api/@support_team/jobs/edit_job.html:9
@@ -340,7 +340,7 @@ msgstr "Titre"
 
 #: templates/api/@support_team/notice/create_notice.html:2
 #, fuzzy
-msgid "Ajouter une nouvelle note : Sailsmakr"
+msgid "Ajouter une nouvelle note : Rumbu"
 msgstr "Ajouter une nouvelle note : Afrilog"
 
 #: templates/api/@support_team/notice/create_notice.html:17
@@ -406,7 +406,7 @@ msgstr "Publier"
 
 #: templates/api/customers/authorizations/apply.html:2
 #, fuzzy
-msgid "Formulaire de demande de procuration : Sailsmakr"
+msgid "Formulaire de demande de procuration : Rumbu"
 msgstr "Formulaire de demande de procuration : Afrilog"
 
 #: templates/api/customers/authorizations/apply.html:16
@@ -522,7 +522,7 @@ msgid "Articles enregistrés - Afrilog"
 msgstr "Articles enregistrés - Afrilog"
 
 #: templates/api/customers/contacts/create_contact.html:4
-msgid "Ajouter un contact : Sailsmakr"
+msgid "Ajouter un contact : Rumbu"
 msgstr ""
 
 #: templates/api/customers/contacts/create_contact.html:20
@@ -719,7 +719,7 @@ msgstr "Fermer"
 
 #: templates/api/customers/goods/purchase_request.html:2
 #, fuzzy
-msgid "Passer une commande : Sailsmakr"
+msgid "Passer une commande : Rumbu"
 msgstr "Passer une commande : Afrilog"
 
 #: templates/api/customers/goods/purchase_request.html:17
@@ -996,7 +996,7 @@ msgstr "Nouveau message"
 
 #: templates/auth/layout.html:5 templates/auth/login.html:2
 #, fuzzy
-msgid "Sailsmakr : Se connecter"
+msgid "Rumbu : Se connecter"
 msgstr "Afrilog : Se connecter"
 
 #: templates/auth/login.html:8 templates/auth/login.html:110
@@ -1061,7 +1061,7 @@ msgstr "Créer un compte ici"
 
 #: templates/auth/signup.html:2
 #, fuzzy
-msgid "Sailsmakr : Créer un nouveau compte"
+msgid "Rumbu : Créer un nouveau compte"
 msgstr "Afrilog : Créer un nouveau compte"
 
 #: templates/auth/signup.html:8
@@ -1144,7 +1144,7 @@ msgstr "Connectez vous ici"
 
 #: templates/dashboard/applied_jobs_listing.html:2
 #, fuzzy
-msgid "Mes Candidatures : Sailsmakr"
+msgid "Mes Candidatures : Rumbu"
 msgstr "Formulaire de candidature : Afrilog"
 
 #: templates/dashboard/applied_jobs_listing.html:6
@@ -1185,7 +1185,7 @@ msgstr ""
 
 #: templates/dashboard/calculator.html:2
 #, fuzzy
-msgid "Calculatrice : Sailsmakr"
+msgid "Calculatrice : Rumbu"
 msgstr "Calculatrice : Afrilog"
 
 #: templates/dashboard/calculator.html:17
@@ -1224,7 +1224,7 @@ msgstr "MyAfrilog : Dashboard"
 
 #: templates/dashboard/jobs_listing.html:2
 #, fuzzy
-msgid "Nouvelles offres d'emploi : Sailsmakr"
+msgid "Nouvelles offres d'emploi : Rumbu"
 msgstr "Nouvelles offres d'emploi : Afrilog"
 
 #: templates/dashboard/jobs_listing.html:20
@@ -1261,7 +1261,7 @@ msgstr "postuler"
 #: templates/dashboard/customers/inbox.html:4
 #: templates/dashboard/new_messages.html:2
 #, fuzzy
-msgid "Boîte de réception : Sailsmakr"
+msgid "Boîte de réception : Rumbu"
 msgstr "Boîte de réception : Afrilog"
 
 #: templates/dashboard/customers/inbox.html:22
@@ -1272,7 +1272,7 @@ msgstr "Boîte de réception"
 
 #: templates/dashboard/sent_messages.html:2
 #, fuzzy
-msgid "Messages envoyés : Sailsmakr"
+msgid "Messages envoyés : Rumbu"
 msgstr "Messages envoyés : Afrilog"
 
 #: templates/dashboard/sent_messages.html:19
@@ -1340,12 +1340,12 @@ msgstr ""
 
 #: templates/dashboard/user_home.html:2
 #, fuzzy
-msgid "MySailsmakr : Accueil"
+msgid "MyRumbu : Accueil"
 msgstr "MyAfrilog : Accueil"
 
 #: templates/dashboard/@support_team/ads.html:2
 #, fuzzy
-msgid "Campagnes pub : Sailsmakr"
+msgid "Campagnes pub : Rumbu"
 msgstr "Campagnes pub : Afrilog"
 
 #: templates/dashboard/@support_team/ads.html:14
@@ -1499,12 +1499,12 @@ msgstr "Entrez les objectifs de la campagne..."
 
 #: templates/dashboard/@support_team/applicant_desc.html:6
 #: templates/dashboard/@support_team/quote_desc.html:6
-msgid " - Sailsmakr"
+msgid " - Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/applicants_list.html:2
 #, fuzzy
-msgid "Applications Récentes : Sailsmakr"
+msgid "Applications Récentes : Rumbu"
 msgstr "Applications Récentes : Afrilog"
 
 #: templates/dashboard/@support_team/applicants_list.html:5
@@ -1556,7 +1556,7 @@ msgstr "Imprimer fichier"
 
 #: templates/dashboard/@support_team/calendar.html:3
 #, fuzzy
-msgid "Calendrier : Sailsmakr"
+msgid "Calendrier : Rumbu"
 msgstr "Calendrier : Afrilog"
 
 #: templates/dashboard/@support_team/calendar.html:17
@@ -1567,7 +1567,7 @@ msgstr "Calendrier"
 
 #: templates/dashboard/@support_team/employees_listing.html:2
 #, fuzzy
-msgid "Table des employés : Sailsmakr"
+msgid "Table des employés : Rumbu"
 msgstr "Table des employés : Afrilog"
 
 #: templates/dashboard/@support_team/employees_listing.html:16
@@ -1593,7 +1593,7 @@ msgid "Imprimer carte"
 msgstr "Imprimer carte"
 
 #: templates/dashboard/@support_team/events.html:3
-msgid "Evènements : Sailsmakr"
+msgid "Evènements : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/events.html:17
@@ -1616,7 +1616,7 @@ msgstr "Commence à"
 
 #: templates/dashboard/@support_team/finance_reports.html:4
 #, fuzzy
-msgid "Rapport financier : Sailsmakr"
+msgid "Rapport financier : Rumbu"
 msgstr "Rapport financier : Afrilog"
 
 #: templates/dashboard/@support_team/finance_reports.html:20
@@ -1629,7 +1629,7 @@ msgid "Rapport financier"
 msgstr "Rapport financier"
 
 #: templates/dashboard/@support_team/folders.html:2
-msgid "Dossiers : Sailsmakr"
+msgid "Dossiers : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/folders.html:14
@@ -1913,7 +1913,7 @@ msgstr "Carrières"
 
 #: templates/dashboard/@support_team/invoices.html:3
 #, fuzzy
-msgid "Factures : Sailsmakr"
+msgid "Factures : Rumbu"
 msgstr "Factures : Afrilog"
 
 #: templates/dashboard/@support_team/invoices.html:17
@@ -1976,12 +1976,12 @@ msgid "Ajouter une description supplémentaire"
 msgstr "Ajouter une description supplémentaire"
 
 #: templates/dashboard/@support_team/job_details.html:6
-msgid "- Sailsmakr"
+msgid "- Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/marketplace.html:4
 #, fuzzy
-msgid "Marketplace : Sailsmakr"
+msgid "Marketplace : Rumbu"
 msgstr "Marketplace : Afrilog"
 
 #: templates/dashboard/@support_team/marketplace.html:23
@@ -1990,7 +1990,7 @@ msgstr "Marketplace"
 
 #: templates/dashboard/@support_team/my_task.html:2
 #, fuzzy
-msgid "Mes tâches : Sailsmakr"
+msgid "Mes tâches : Rumbu"
 msgstr "Mes tâches : Afrilog"
 
 #: templates/dashboard/@support_team/my_task.html:14
@@ -2007,7 +2007,7 @@ msgstr "Assigné à"
 
 #: templates/dashboard/@support_team/new_purchases.html:3
 #, fuzzy
-msgid "Nouveaux achats : Sailsmakr"
+msgid "Nouveaux achats : Rumbu"
 msgstr "Nouveaux achats : Afrilog"
 
 #: templates/dashboard/@support_team/new_purchases.html:16
@@ -2093,7 +2093,7 @@ msgstr "Liens utiles"
 
 #: templates/dashboard/@support_team/previous_created_jobs.html:4
 #, fuzzy
-msgid "Offres publiées : Sailsmakr"
+msgid "Offres publiées : Rumbu"
 msgstr "Offres publiées : Afrilog"
 
 #: templates/dashboard/@support_team/previous_created_jobs.html:24
@@ -2103,7 +2103,7 @@ msgstr "Offres publiées"
 
 #: templates/dashboard/@support_team/previous_notes.html:4
 #, fuzzy
-msgid "Notes récentes : Sailsmakr"
+msgid "Notes récentes : Rumbu"
 msgstr "Notes récentes : Afrilog"
 
 #: templates/dashboard/@support_team/previous_notes.html:23
@@ -2134,7 +2134,7 @@ msgid "Mettre à jour"
 msgstr "Mettre à jour"
 
 #: templates/dashboard/@support_team/products.html:4
-msgid "Produits : Sailsmakr"
+msgid "Produits : Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/products.html:18
@@ -2312,7 +2312,7 @@ msgstr "Veuillez entrer le nom de votre produit"
 
 #: templates/dashboard/@support_team/quotes_list.html:4
 #, fuzzy
-msgid "Demandes de procurations : Sailsmakr"
+msgid "Demandes de procurations : Rumbu"
 msgstr "Demandes de procurations : Afrilog"
 
 #: templates/dashboard/@support_team/quotes_list.html:18
@@ -2371,7 +2371,7 @@ msgid "Modifier la demande de devis"
 msgstr "Modifier la demande de devis"
 
 #: templates/dashboard/@support_team/stores.html:3
-msgid "Magasins: Sailsmakr"
+msgid "Magasins: Rumbu"
 msgstr ""
 
 #: templates/dashboard/@support_team/stores.html:15
@@ -2439,7 +2439,7 @@ msgstr "Modifier les informations"
 
 #: templates/dashboard/@support_team/tasks.html:3
 #, fuzzy
-msgid "Tâches : Sailsmakr"
+msgid "Tâches : Rumbu"
 msgstr "Tâches : Afrilog"
 
 #: templates/dashboard/@support_team/tasks.html:15
@@ -2609,7 +2609,7 @@ msgstr "Ici vous pouvez gérer et organiser les tâches qu'on vous aura assigné
 
 #: templates/dashboard/customers/live_tracking.html:4
 #, fuzzy
-msgid "Suivre mon colis : Sailsmakr"
+msgid "Suivre mon colis : Rumbu"
 msgstr "Réunions : Afrilog"
 
 #: templates/dashboard/customers/live_tracking.html:23
@@ -2659,7 +2659,7 @@ msgstr "Livres"
 
 #: templates/dashboard/customers/previous_purchase_requests.html:2
 #, fuzzy
-msgid "Commandes récentes : Sailsmakr"
+msgid "Commandes récentes : Rumbu"
 msgstr "Notes récentes : Afrilog"
 
 #: templates/dashboard/customers/previous_purchase_requests.html:19
@@ -2732,7 +2732,7 @@ msgstr ""
 
 #: templates/dashboard/customers/previous_quotes.html:2
 #, fuzzy
-msgid "Demandes récentes : Sailsmakr"
+msgid "Demandes récentes : Rumbu"
 msgstr "Notes récentes : Afrilog"
 
 #: templates/dashboard/customers/previous_quotes.html:16
@@ -2810,15 +2810,15 @@ msgstr "Carte d'identité"
 
 #: templates/dashboard/customers/saved_jobs_listing.html:6
 #, fuzzy
-msgid "Postes Sauvegardés - Sailsmakr"
+msgid "Postes Sauvegardés - Rumbu"
 msgstr "Postes récents - Afrilog"
 
 #: templates/dashboard/customers/tracked_goods_listing.html:6
-msgid "Liste des colis que vous suivez en temps réel - Sailsmakr"
+msgid "Liste des colis que vous suivez en temps réel - Rumbu"
 msgstr ""
 
 #: templates/dashboard/customers/view_contacts.html:4
-msgid "Contacts : Sailsmakr"
+msgid "Contacts : Rumbu"
 msgstr ""
 
 #: templates/dashboard/customers/view_contacts.html:23

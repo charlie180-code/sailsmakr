@@ -165,17 +165,6 @@
   
             {% if current_user.is_responsible() or current_user.is_company_it_administrator() or current_user.is_sales() %}
             <li class="nav-item">
-                <a class="nav-link text-white {% if request.path == url_for('accounting.manage_invoices', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('accounting.manage_invoices', company_id=company.id) }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">receipt</i>
-                    </div>
-                    <span class="nav-link-text ms-1">{{ _('Factures') }}</span>
-                </a>
-            </li>
-            {% endif %}
-  
-            {% if current_user.is_responsible() or current_user.is_company_it_administrator() or current_user.is_sales() %}
-            <li class="nav-item">
               <a class="nav-link text-white {% if request.path == url_for('archive.folders', company_id=company.id) %}active bg-gradient-primary{% endif %}" href="{{ url_for('archive.folders', company_id=company.id) }}">
                   <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                       <i class="material-icons opacity-10">folder</i>

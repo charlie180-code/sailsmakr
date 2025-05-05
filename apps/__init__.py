@@ -31,10 +31,10 @@ migrate = Migrate()
 babel = Babel()
 
 
-def create_app(production=True, template_folder='templates', static_folder='static'):
+def create_app(development=True, template_folder='templates', static_folder='static'):
     app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
-    app.config.from_object(config['production'])
-    config['production'].init_app(app)
+    app.config.from_object(config['development'])
+    config['development'].init_app(app)
     app.config['JSON_AS_ASCII'] = False
     bootstrap.init_app(app)
     mail.init_app(app)
@@ -225,7 +225,7 @@ def create_app(production=True, template_folder='templates', static_folder='stat
     @app.route('/health')
     def health_check():
         return jsonify(
-            {'Message' :'Hello from Sailsmakr Team, Server is good and you\'re ready to go'},
+            {'Message' :'Hello from Rumbu Team, Server is good and you\'re ready to go'},
             200
         )
 

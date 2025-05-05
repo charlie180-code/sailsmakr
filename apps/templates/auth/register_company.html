@@ -1,5 +1,5 @@
 {% extends 'auth/layout.html' %}
-{% block title %}{{ _('Sailsmakr : Ajouter une nouvelle entreprise') }}{% endblock %}
+{% block title %}{{ _('Rumbu : Ajouter une nouvelle entreprise') }}{% endblock %}
 {% block content %}
 <section class="bg-white">
   <div class="lg:grid lg:min-h-screen lg:grid-cols-12">
@@ -138,83 +138,11 @@
         </div>
 
 
-        <!-- Sector Selection with Descriptive Text -->
-        <div class="col-span-6">
-          <label for="Category" class="block text-sm font-medium text-gray-700">
-            {{ _('Dites-nous comment vous prévoyez d\'utiliser nos applications') }} <span class="text-red-500">*</span>
-          </label>
-
-          <!-- Sector Selection with Descriptive Text -->
-          <div class="mt-4 space-y-6">
-              <!-- Academics -->
-                <label class="block p-4 border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer peer-checked:border-blue-600">
-                  <div class="flex items-center">
-                    <input type="radio" name="category" id="sector-academics" value="Education" required>
-                    <span class="text-lg font-medium text-gray-900 ms-2">{{ _('Académie') }}</span>
-                  </div>
-                  <p class="mt-1 text-sm text-gray-700">
-                    {{ _('Destiné aux établissements d\'enseignement, nos outils permettent la gestion complète des étudiants, du personnel et des ressources éducatives, facilitant ainsi le fonctionnement administratif et académique.') }}
-                  </p>
-                </label>
-
-              <!-- Engineering -->
-              <label class="block p-4 border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer peer-checked:border-blue-600">
-                  <div class="flex items-center">
-                    <input class="peer" type="radio" name="category" id="sector-engineering" value="Engineering">
-                    <span class="text-lg font-medium text-gray-900 ms-2">{{ _('Ingénierie') }}</span>
-                  </div>
-                  <p class="mt-1 text-sm text-gray-700">
-                    {{ _('Nos outils pour le secteur de l\'ingénierie incluent la gestion des projets, la planification des tâches, et l\'analyse des données, permettant une gestion efficace et structurée des opérations techniques. Nous offrons également des outils d\'analyse de données avancées dans les activités de recherche.') }}
-                  </p>
-              </label>
-
-              <!-- Shipping -->
-              <label class="block p-4 border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer peer-checked:border-blue-600">
-                <div class="flex items-center">
-                  <input class="peer" type="radio" name="category" id="sector-shipping" value="Shipping">
-                  <span class="text-lg font-medium text-gray-900 ms-2">{{ _('Dropshipping') }}</span>
-                </div>
-                <p class="mt-1 text-sm text-gray-700">
-                  {{ _('Conçus pour les entreprises de logistique, nos outils offrent des solutions pour la gestion de la chaîne d\'approvisionnement, le suivi des expéditions et l\'optimisation des opérations de logistique, de transit et de transport.') }}
-                </p>
-              </label>
-          </div>
-
-          <p class="text-red-500 hidden" id="CategoryEmptyError">
-              {{ _('Veuillez entrer votre secteur d\'activité pour continuer') }}
-          </p>
-        </div>
-
 
 
       
       
 
-        
-        <!-- Nature & Email -->
-        <div class="col-span-6 md:col-span-3">
-          <label for="Nature" class="block text-sm font-medium text-gray-700">
-            {{ _('Nature de l\'entreprise') }}
-          </label>
-          <select
-            id="Nature"
-            name="nature"
-            class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-          >
-              <option value="" disabled selected>{{ _('Sélectionnez la nature de votre entreprise') }}</option>
-              <option value="corp">{{ _('Corp') }}</option>
-              <option value="llc">{{ _('LLC') }}</option>
-              <option value="sarl">{{ _('SARL') }}</option>
-              <option value="sa">{{ _('SA') }}</option>
-              <option value="sasu">{{ _('SASU') }}</option>
-              <option value="sas">{{ _('SAS') }}</option>
-              <option value="sci">{{ _('SCI') }}</option>
-              <option value="sci">{{ _('SCI') }}</option>
-              <option value="eurl">{{ _('EURL') }}</option>
-              <option value="plc">{{ _('PLC') }}</option>
-              <option value="llp">{{ _('LLP') }}</option>
-          </select>
-        </div>
 
 
           <!-- Phone Number & Website URL -->
