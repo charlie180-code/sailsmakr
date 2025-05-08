@@ -13,34 +13,6 @@ def role_required(role_name):
         return decorated_function
     return decorator
 
-"""such decorators are mostly used for
-educational institutions
-"""
-
-# School-specific role decorators
-def school_admin_required(f):
-    return role_required('School Admin')(f)
-
-def school_accountant_required(f):
-    return role_required('School Accountant')(f)
-
-def school_hr_manager_required(f):
-    return role_required('School HR Manager')(f)
-
-def school_it_admin_required(f):
-    return role_required('School IT Administrator')(f)
-
-def librarian_required(f):
-    return role_required('Librarian')(f)
-
-def teacher_required(f):
-    return role_required('Teacher')(f)
-
-def parent_required(f):
-    return role_required('Parent')(f)
-
-def student_required(f):
-    return role_required('Student')(f)
 
 
 # General position-based decorators for companies
@@ -53,9 +25,7 @@ def position_required(position_title):
             return f(*args, **kwargs)
         return decorated_function
     return decorator
-"""such decorators are mostly used for
-almost all kind of company
-"""
+
 
 def it_administrator_required(f):
     @wraps(f)

@@ -4,12 +4,7 @@ import qrcode
 from datetime import datetime
 from flask_babel import gettext as _
 from weasyprint import HTML
-from ..models.school.student import Student
 from ..models.general.company import Company
-from ..models.school.session import Session
-from ..models.school.academic_year import AcademicYear
-from ..models.school.installment import Installment
-from ..models.school.classroom import Class
 import base64
 from itsdangerous import URLSafeTimedSerializer
 from werkzeug.utils import secure_filename
@@ -17,31 +12,6 @@ import os
 import requests
 from sqlalchemy.orm import joinedload
 from ..models.general.file import File
-
-
-
-def generate_invoice(student_id):
-    student = Student.query.get_or_404(student_id)
-    company = Company.query.get_or_404(student.company_id)
-    installment = Installment.query.filter_by(student_id=student_id).order_by(Installment.due_date.desc()).first()
-    
-    if not installment:
-        raise Exception("No installment found for this student.")
-
-    qr_code_io = create_qr_code(f"Invoice ID: {installment.id}\nAmount: {installment.amount}\nCurrency: {installment.currency}")
-
-    invoice_data = prepare_invoice_data(student, company, installment)
-
-    html_content = render_template('reports/invoices/installment_receipt.html', invoice_data=invoice_data, qr_code_base64=base64.b64encode(qr_code_io.getvalue()).decode('utf-8'))
-
-    pdf = HTML(string=html_content).write_pdf()    
-
-    translated_filename = f"{_('Reçu_inscription')} - {installment.id}.pdf"
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = f'attachment; filename={translated_filename}'
-
-    return response
 
 
 def create_qr_code(data):
@@ -60,51 +30,6 @@ def create_qr_code(data):
     qr_code_io.seek(0)
 
     return qr_code_io
-
-def prepare_invoice_data(student, company, installment):
-
-    student_class = Class.query.get(student.class_id)
-    
-    session = Session.query.get(student_class.session_id)
-    
-    academic_year = AcademicYear.query.get(session.academic_year_id)
-
-    if student_class.tuition > 0:
-        tuition_fees = student_class.tuition
-    elif academic_year and academic_year.tuition_fees > 0:
-        tuition_fees = academic_year.tuition_fees
-    else:
-        tuition_fees = 0
-
-    remaining_fees = tuition_fees - installment.amount if tuition_fees > 0 else 0
-
-    return {
-        'company_name': company.title,
-        'company_logo': company.logo_url,
-        'company_address': company.location,
-        'company_email':company.email,
-        'student_full_name': f"{student.user.first_name} {student.user.last_name}",
-        'student_dob': student.user.date_of_birth.strftime('%Y-%m-%d'),
-        'student_gender': student.user.gender,
-        'invoice_id': generate_invoice_id(),
-        'invoice_date': datetime.utcnow().strftime('%B %d, %Y'),
-        'class_name': Class.query.get(student.class_id).name,
-        'amount': installment.amount,
-        'currency': installment.currency,
-        'due_date': installment.due_date.strftime('%B %d, %Y'),
-        'tuition_fees': tuition_fees,
-        'remaining_amount': remaining_fees if remaining_fees > 0 else 0 
-    }
-
-def generate_invoice_id():
-    import random
-    import datetime
-
-    date_str = datetime.datetime.now().strftime("%Y%m%d")
-    random_number = random.randint(1000, 9999)
-    invoice_id = f"{date_str}-{random_number}"
-
-    return invoice_id
 
 
 def generate_reset_token(user, expiration=3600):

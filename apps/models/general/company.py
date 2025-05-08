@@ -23,47 +23,21 @@ class Company(db.Model):
     registration_date = db.Column(db.DateTime, default=db.func.current_timestamp())
     tags = db.Column(db.String)
     
-    activity_sector = db.Column(db.String)  # Sector in which the company operates
-    disk_space = db.Column(db.String)  # Total disk space allocated to the company
-    number_of_emails = db.Column(db.Integer)  # Number of email accounts
-    number_of_domain_names = db.Column(db.Integer)  # Number of domain names
-    plan_end_date = db.Column(db.DateTime)  # End date of the company's current plan
-    tools_used = db.Column(db.Text)  # List of tools or software used by the company
-
     
     # user specific
     users = db.relationship('User', backref='company', lazy=True)
 
 
-    # school specific
-    sections = db.relationship('Section', backref='company', lazy=True)
-    subjects = db.relationship('Subject', backref='company', lazy=True)
-    classes = db.relationship('Class', backref='company', lazy=True)
-    finances = db.relationship('Finance', backref='company', lazy=True)
-    students = db.relationship('Student', backref='company', lazy=True)
-    books = db.relationship('Book', backref='company', lazy=True)
-    audiobooks = db.relationship('AudioBook', backref='company', lazy=True)
-    sessions = db.relationship('Session', backref='company', lazy=True)
-    teachers = db.relationship('Teacher', backref='company', lazy=True)
-    exams = db.relationship('Exam', backref='company', lazy=True)
-    expenses = db.relationship('Expense', back_populates='company', lazy=True)
-
     folders = db.relationship('Folder', backref='company', lazy=True)
-    jobs = db.relationship('Job', backref='company', lazy=True)
     notes = db.relationship('Note', backref='company', lazy=True)
     articles = db.relationship('Article', backref='company', lazy=True)
-    book_loans = db.relationship('BookLoan', backref='company', lazy=True)
-    marketing_campaigns = db.relationship('MarketingCampaign', backref='company', lazy=True)
-    employees = db.relationship('Employee', backref='company', lazy=True)
     invoices = db.relationship('Invoice', backref='company', lazy=True)
-    projects = db.relationship('Project', backref='company', lazy=True)
 
 
     files = db.relationship('File', backref='company', lazy=True)
 
 
     # gas, oil exploitation company
-    pipelines = db.relationship('Pipeline', backref='company', lazy=True)
     
 
     

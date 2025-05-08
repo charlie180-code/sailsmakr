@@ -5,18 +5,13 @@ from flask_login import login_required, current_user
 from newsdataapi import NewsDataApiClient
 from .support_team.business.insights import (
     get_weekly_financial_summary, get_monthly_user_summary, 
-    get_daily_client_summary, get_user_invoices, count_all_students,
-    calculate_student_count_percentage_difference, calculate_student_data_size,
-    count_school_sessions, get_academic_year_for_session, get_number_of_books,
-    get_number_of_book_loans, calculate_total_versed_by_students,
-    calculate_total_expenses, count_all_companies, get_daily_company_summary,
-    get_data_size_for_company
+    get_daily_client_summary, get_user_invoices,
+    get_daily_company_summary, get_data_size_for_company
 )
 from ..models.shipping.product import Product
 from ..models.shipping.purchase import Purchase
 from ..models.general.invoice import Invoice
 from ..models.general.company import Company
-from ..models.general.message import Message
 from ..models.general.user import User, generate_password_hash
 from ..models.general.role import Role
 from ..utils import save_files
@@ -32,17 +27,6 @@ def user_home(company_id):
     company = Company.query.get_or_404(company_id)
 
     api = NewsDataApiClient(apikey=os.environ.get('NEWS_API_KEYS')) 
-    
-    student_count = count_all_students(company_id) or 0
-    student_count_percentage_difference = calculate_student_count_percentage_difference(company_id) or 0
-    student_data_size = calculate_student_data_size(company_id) or 0
-    session_count = count_school_sessions(company_id) or 0
-    academic_year = get_academic_year_for_session(company_id) or "N/A"
-    book_count = get_number_of_books(company_id) or 0
-    book_loan_count = get_number_of_book_loans(company_id) or 0
-    total_versed = calculate_total_versed_by_students(company_id) or 0
-    total_expenses = calculate_total_expenses(company_id) or 0
-
     summary = get_weekly_financial_summary(company_id) or {}
     user_summary = get_monthly_user_summary(company_id) or {}
     client_summary = get_daily_client_summary(company_id) or {}
@@ -72,17 +56,6 @@ def user_home(company_id):
         published_products=published_products,
         new_products=new_products,
         company=company,
-        book_count=book_count,
-        book_loan_count=book_loan_count,
-        student_count=student_count,
-        student_count_percentage_difference=student_count_percentage_difference,
-        student_data_size=student_data_size,
-        session_count=session_count,
-        academic_year=academic_year,
-        total_versed=total_versed,
-        total_expenses=total_expenses,
-        companies=companies,
-        daily_company_summary=daily_company_summary,
         total_disk_usage_mb=total_size_mb,
         expenses=expenses
     )
@@ -234,58 +207,3 @@ def settings(company_id):
         "dashboard/settings.html",
         company=company
     )
-
-
-
-
-# for students
-@user.route('/friends/<int:company_id>')
-@login_required
-def friends(company_id):
-    company = Company.query.get_or_404(company_id)
-
-    if current_user.company_id != company.id:
-        abort(403)
-
-    page = request.args.get('page', 1, type=int)
-    per_page = 10
-
-    students_query = User.query.filter_by(company_id=company.id).join(Role).filter(Role.name == 'Student')
-    pagination = students_query.paginate(page=page, per_page=per_page, error_out=False)
-
-    students = pagination.items
-    total_pages = pagination.pages
-
-    student_data = []
-    for student in students:
-        if student.id == current_user.id:
-            continue
-
-        friends_in_common = current_user.friends_in_common(student)
-
-        student_data.append({
-            'first_name': student.first_name,
-            'last_name': student.last_name,
-            'profile_picture_url': student.profile_picture_url,
-            'friends_in_common': friends_in_common,
-        })
-
-    return render_template(
-        "views/school/student/my_friends.html",
-        company=company,
-        students=student_data,
-        page=page,
-        total_pages=total_pages
-    )
-
-@user.route('/chats/<int:company_id>')
-@login_required
-def chats(company_id):
-    company = Company.qery.get_or_404(company_id)
-    return render_template(
-        'views/school/student/chats.html',
-        company_id=company.id
-    )
-
-
-

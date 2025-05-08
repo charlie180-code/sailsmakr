@@ -6,9 +6,6 @@ from flask_login import UserMixin
 from ... import db, login_manager
 import os
 from .role import Role
-from ..school.grade import Grade
-from ..school.friendship import Friendship
-from ..school.friendship import friends
 from sqlalchemy.orm import aliased
 from flask_login import current_user
 
@@ -32,7 +29,6 @@ class User(db.Model, UserMixin):
     address = db.Column(db.String())
     profile_picture_url = db.Column(db.String)
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
-    wages = db.relationship('Wage', backref='user', lazy=True)
     contacts = db.relationship('Contact', back_populates='user', lazy='dynamic')
 
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
@@ -56,40 +52,6 @@ class User(db.Model, UserMixin):
     authorizations = db.relationship('Authorization', backref='user', lazy='dynamic')
     purchases = db.relationship('Purchase', back_populates='user', lazy=True)
     tasks = db.relationship('Task', lazy=True)
-    docs = db.relationship('Doc', backref='user', lazy=True)
-    messages_sent = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender', lazy='dynamic')
-    messages_received = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver', lazy='dynamic')
-
-    # Specific relationships for school system
-    grades = db.relationship('Grade', backref='student', lazy=True)
-    attendance_records = db.relationship('Attendance', backref='student', lazy=True)
-    book_loans = db.relationship('BookLoan', backref='user', lazy=True)
-    students = db.relationship('Student', back_populates='user', lazy=True)
-
-    # General employee information
-    hire_date = db.Column(db.DateTime, default=datetime.utcnow)
-    position = db.Column(db.String)
-    department = db.Column(db.String)
-    phone_number = db.Column(db.String)
-
-    
-    # These columns can be used for storing
-    # informations for service mutations 
-    arrival_date = db.Column(db.DateTime())
-    leaving_date = db.Column(db.DateTime())
-    transport_company = db.Column(db.String)
-    transport_type = db.Column(db.String)
-    transport_costs = db.Column(db.String)
-    current_location = db.Column(db.String)
-
-
-
-    # Transport & Logistics
-    transport_license = db.Column(db.String)
-
-    # Public Works
-    project_role = db.Column(db.String)
-    certification = db.Column(db.String)
 
 
     social_security_number = db.Column(db.String(64))
@@ -106,25 +68,6 @@ class User(db.Model, UserMixin):
     service_name = db.Column(db.String())
     registration_number = db.Column(db.String(), default='1254')
 
-    # Electricity
-    electrical_certification = db.Column(db.String)
-    safety_training = db.Column(db.String)
-
-    # Plumbing
-    plumbing_certification = db.Column(db.String)
-    tool_expertise = db.Column(db.String)
-
-    # Electronics
-    electronics_certification = db.Column(db.String)
-    tech_skills = db.Column(db.String)
-
-    # Biology
-    lab_certifications = db.Column(db.String)
-    research_interests = db.Column(db.String)
-
-    # Oil, gas and Water exploitation
-    pipeline_id = db.Column(db.Integer(), db.ForeignKey('pipelines.id'))
-
     blood_group = db.Column(db.String())
 
     signature_name = db.Column(db.String(128))
@@ -140,13 +83,6 @@ class User(db.Model, UserMixin):
     def password(self):
         raise AttributeError('password is not a readable attribute')
 
-    def set_email_password(self, password):
-        # Implement encryption here (e.g., using Fernet)
-        self.email_password = password  # In production, encrypt this
-        
-    def get_email_password(self):
-        # Implement decryption here
-        return self.email_password
 
     @password.setter
     def password(self, password):
@@ -179,7 +115,7 @@ class User(db.Model, UserMixin):
 
     def assign_role(self):
         roles = {
-            current_app.config['RUMBU_CEO']:'SAILSMARK_Ceo',
+            current_app.config['RUMBU_CEO']:'Rumbu_Ceo',
             current_app.config['RUMBU_HR_MANAGER']:'Rumbu_HR_Manager',
             current_app.config['RUMBU_ACCOUNTANT']:'Rumbu_Accountant',
         }
@@ -251,84 +187,6 @@ class User(db.Model, UserMixin):
     
     def is_sales(self):
         return self.has_position('Sales Manager')
-
-    def is_rumbu_sales_director(self):
-        """Check if the current user is the Rumbu Sales Director."""
-        sailsmakr_sales_director_email = current_app.config['RUMBU_SALES_DIRECTOR']
-        return current_user.email == sailsmakr_sales_director_email
-    
-
-
-
-    # School-specific roles
-    def is_school_admin(self):
-        return self.role.name == 'School Admin'
-
-    def is_school_accountant(self):
-        return self.role.name == 'School Accountant'
-
-    def is_school_hr_manager(self):
-        return self.role.name == 'School HR Manager'
-
-    def is_librarian(self):
-        return self.role.name == 'Librarian'
-
-    def is_teacher(self):
-        return self.role.name == 'Teacher'
-
-    def is_parent(self):
-        return self.role.name == 'Parent'
-
-    def is_student(self):
-        return self.role.name == 'Student'
-    
-    def is_it_administrator(self):
-        return self.role.name == 'School IT Administrator'
-
-    
-    # Methods to manage friendships
-    def add_friend(self, user):
-        if not self.is_friends_with(user):
-            self.friends.append(user)
-            return self
-
-    def remove_friend(self, user):
-        if self.is_friends_with(user):
-            self.friends.remove(user)
-            return self
-
-    def is_friends_with(self, user):
-        return self.friends.filter(friends.c.friend_id == user.id).count() > 0
-
-    def friends_in_common(self, other_user):
-        return self.friends.filter(friends.c.friend_id.in_(
-            other_user.friends.with_entities(User.id)
-        )).count()
-    
-    
-    def friends_in_common(self, other_user):
-        subquery = (
-            db.session.query(Friendship.friend_id)
-            .filter(Friendship.user_id == self.id)
-            .subquery()
-        )
-        return (
-            db.session.query(User)
-            .join(Friendship, Friendship.friend_id == User.id)
-            .filter(Friendship.user_id == other_user.id)
-            .filter(Friendship.friend_id.in_(subquery))
-            .count()
-        )
-    
-    def is_sailsmakr_sales(email):
-        sales_director = os.getenv('RUMBU_SALES_DIRECTOR')
-
-        if email == sales_director:
-            return True
-        return False
-
-
-
 
     @property
     def is_active(self):

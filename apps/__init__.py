@@ -51,35 +51,11 @@ def create_app(production=True, template_folder='templates', static_folder='stat
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-    from .sessions import session as session_blueprint
-    app.register_blueprint(session_blueprint, url_prefix='/sessions/v1')
-
-    from .classroom import classroom as classroom_blueprint
-    app.register_blueprint(classroom_blueprint, url_prefix='/classrooms/v1')
-
-    from .section import section as section_blueprint
-    app.register_blueprint(section_blueprint, url_prefix='/sections/v1')
-
-    from .main import main as main_blueprint
-    app.register_blueprint(main_blueprint)
-
-    from .promotion import promote as promote_blueprint
-    app.register_blueprint(promote_blueprint, url_prefix='/promote/v1')
-
     from .note import note as note_blueprint
     app.register_blueprint(note_blueprint, url_prefix='/note/v1')
 
-    from .insights import insights as insight_blueprint
-    app.register_blueprint(insight_blueprint, url_prefix='/insights/v1')
-
-    from .msg import msg as msg_blueprint
-    app.register_blueprint(msg_blueprint, url_prefix='/msg/v1')
-
     from .user import user as user_blueprint
     app.register_blueprint(user_blueprint)
-
-    from .wallet import wallet as wallet_blueprint
-    app.register_blueprint(wallet_blueprint, url_prefix='/wallet/v1')
 
     from .task import task as task_blueprint
     app.register_blueprint(task_blueprint, url_prefix='/task/v1')
@@ -93,9 +69,6 @@ def create_app(production=True, template_folder='templates', static_folder='stat
     from .calendar import calendar as calendar_blueprint
     app.register_blueprint(calendar_blueprint, url_prefix='/calendar/v1')
 
-    from .ads import advertise as ads_blueprint
-    app.register_blueprint(ads_blueprint, url_prefix='/ads/v1')
-
     from .reseller import reseller as reseller_blueprint
     app.register_blueprint(reseller_blueprint)
 
@@ -107,9 +80,6 @@ def create_app(production=True, template_folder='templates', static_folder='stat
 
     from .career import career as career_blueprint
     app.register_blueprint(career_blueprint, url_prefix='/career/v1')
-
-    from .internationalization import internationalization as internationalization_blueprint
-    app.register_blueprint(internationalization_blueprint, url_prefix='/i18n/v1')
 
     def get_locale():
         user = getattr(g, 'user', None)

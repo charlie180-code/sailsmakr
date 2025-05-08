@@ -7,7 +7,5 @@ build
 venv
 static/data
 dist
-/linux-venv
 instance
-server
 migrations

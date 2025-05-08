@@ -1,39 +1,6 @@
 from datetime import datetime, timedelta
 from sqlalchemy import func, extract
 from .... import db
-from ....models.shipping.authorization import Authorization 
-from ....models.shipping.purchase import Purchase
-from ....models.general.user import User
-from ....models.general.role import Role
-from ....models.school.student import Student
-from ....models.school.grade import Grade
-from ....models.school.attendance import Attendance
-from ....models.school.session import Session
-from ....models.school.academic_year import AcademicYear
-from ....models.school.exam import Exam
-from ....models.school.book import Book
-from ....models.school.book_loan import BookLoan
-from ....models.school.installment import Installment
-from ....models.school.expense import Expense
-from ....models.general.company import Company
-from ....models.general.file import File
-from ....models.general.folder import Folder
-from ....models.shipping.product import Product
-from ....models.general.article import Article
-from ....models.general.audiobook import AudioBook
-from ....models.school.book import Book
-from ....models.general.invoice import Invoice
-from ....models.school.section import Section
-from ....models.general.company_expense import CompanyExpense
-from ....models.school.subject import Subject
-from ....models.school.classroom import Class
-from ....models.school.teacher import Teacher
-from ....models.general.job import Job
-from ....models.general.note import Note
-from ....models.general.marketingcampaign import MarketingCampaign
-from ....models.general.employee import Employee
-from ....models.general.project import Project
-from ....models.school.finance import Finance
 from flask_login import current_user
 from sqlalchemy.orm import aliased
 import logging
@@ -221,176 +188,6 @@ def get_user_invoices(user_id):
         })
     return invoices
 
-
-def count_all_students(company_id):
-    try:
-        # Query the Student model to count all students for a specific company
-        student_count = Student.query.filter_by(company_id=company_id).count()
-        return student_count
-    except Exception as e:
-        # Handle exceptions (e.g., database errors)
-        print(f"Error counting students: {e}")
-        return None
-
-
-def calculate_student_count_percentage_difference(company_id):
-    try:
-        # Calculate dates for today and yesterday
-        today = datetime.utcnow().date()
-        yesterday = today - timedelta(days=1)
-        
-        # Count the number of students who joined today and yesterday for the specific company
-        today_count = Student.query.filter_by(company_id=company_id).filter(
-            Student.user.has(User.member_since.between(today, today))
-        ).count()
-
-        yesterday_count = Student.query.filter_by(company_id=company_id).filter(
-            Student.user.has(User.member_since.between(yesterday, yesterday))
-        ).count()
-        
-        # Calculate percentage difference
-        if yesterday_count == 0:
-            percentage_difference = 0 if today_count == 0 else 100
-        else:
-            percentage_difference = ((today_count - yesterday_count) / yesterday_count) * 100
-        
-        return round(percentage_difference, 2)
-    except Exception as e:
-        print(f"Error calculating percentage difference: {e}")
-        return None
-
-
-
-def calculate_student_data_size(company_id):
-    try:
-        # Size of student-related text fields (first_name, last_name, email, address)
-        student_size = db.session.query(
-            func.sum(
-                func.length(User.first_name) +
-                func.length(User.last_name) + 
-                func.length(User.email) +
-                func.length(User.address)
-            ).label('student_size')
-        ).join(Student, Student.user_id == User.id).filter(Student.company_id == company_id).scalar() or 0
-
-        # Handle the size of grade columns
-        # If Grade.value is numeric, we can't use length(), so just add its byte size
-        grade_size = db.session.query(
-            func.sum(
-                func.coalesce(func.length(Grade.value.cast(db.String)), 0)
-            ).label('grade_size')
-        ).join(Student, Grade.student_id == Student.user_id).filter(Student.company_id == company_id).scalar() or 0
-
-        # Size of attendance-related text fields (e.g., type_of_attendance)
-        attendance_size = db.session.query(
-            func.sum(
-                func.length(Attendance.type_of_attendance)
-            ).label('attendance_size')
-        ).join(Student, Attendance.student_id == Student.user_id).filter(Student.company_id == company_id).scalar() or 0
-
-        # Sum up the sizes
-        total_size = student_size + grade_size + attendance_size
-
-        return total_size
-    except Exception as e:
-        print(f"Error calculating data size: {e}")
-        return None
-
-    
-
-def count_school_sessions(company_id):
-    try:
-        # Query the Session model to count all sessions for a specific school
-        session_count = Session.query.filter_by(company_id=company_id).count()
-        return session_count
-    except Exception as e:
-        print(f"Error counting sessions: {e}")
-        return None
-    
-def get_academic_year_for_session(company_id):
-    try:
-        # Query to find the most recent session for the specific company
-        session = Session.query.filter_by(company_id=company_id).order_by(Session.start_date.desc()).first()
-        
-        if session:
-            # Get the academic year associated with this session
-            academic_year = AcademicYear.query.filter_by(id=session.academic_year_id).first()
-            return academic_year.name if academic_year else None
-        return None
-    except Exception as e:
-        print(f"Error retrieving academic year: {e}")
-        return None
-
-def get_exams_for_teacher(company_id):
-    try:
-        # Query to find all the exams created by a teacher
-        exams = Exam.query.filter_by(
-            teacher_id=current_user.id
-        ).count()
-        return exams
-    except Exception as e:
-        print(f"Error counting exams created by the teacher: {e}")
-        return None
-
-
-def get_classes_for_teacher(company_id):
-    """
-    implement the logic to get the number
-    of classes for a teacher
-    """
-    pass
-
-def get_students_number(company_id):
-    """
-    implement the logic to get the number
-    of students in classes where the teacher
-    teach
-    """
-    pass
-
-def get_students_number(company_id):
-    """
-    implement the logic to get the number
-    of students in classes where the teacher
-    teach
-    """
-    pass
-
-
-
-def get_student_session_avg(company_id):
-    """
-    implement the logic to get 
-    the avg grade of all students
-    """
-    pass
-
-def get_number_of_books(company_id):
-    """
-    Get the total number of books for a specific company.
-    
-    Args:
-        company_id (int): The ID of the company.
-    
-    Returns:
-        int: The number of books associated with the company.
-    """
-    return Book.query.filter_by(company_id=company_id).count()
-
-
-def get_number_of_book_loans(company_id):
-    """
-    Get the total number of book loans for a specific company.
-    
-    Args:
-        company_id (int): The ID of the company.
-    
-    Returns:
-        int: The number of book loans associated with the company.
-    """
-    return BookLoan.query.join(Book).filter(Book.company_id == company_id).count()
-
-
 def last_month_start_date():
     today = datetime.today()
     first_day_of_current_month = today.replace(day=1)
@@ -403,57 +200,6 @@ def last_month_end_date():
     last_day_of_last_month = first_day_of_current_month - timedelta(days=1)
     return last_day_of_last_month
 
-
-# Function to calculate the total amount received by students during the latest session
-def calculate_total_versed_by_students(company_id):
-    total = db.session.query(db.func.sum(Installment.amount)).filter(
-        Installment.student.has(company_id=company_id)
-    ).scalar()
-    
-    return total or 0  # Return 0 if total is None
-
-# Function to calculate total expenses (from invoices and wages)
-def calculate_total_expenses(company_id):
-    total = db.session.query(db.func.sum(Expense.amount)).filter_by(company_id=company_id).scalar()
-    return total or 0  # Return 0 if total is None
-
-
-
-def calculate_student_count_percentage_difference(company_id):
-    try:
-        # Calculate dates for today and yesterday
-        today = datetime.utcnow().date()
-        yesterday = today - timedelta(days=1)
-        
-        # Count the number of students who joined today and yesterday for the specific company
-        today_count = Student.query.filter_by(company_id=company_id).filter(
-            Student.user.has(User.member_since.between(today, today))
-        ).count()
-
-        yesterday_count = Student.query.filter_by(company_id=company_id).filter(
-            Student.user.has(User.member_since.between(yesterday, yesterday))
-        ).count()
-        
-        # Calculate percentage difference
-        if yesterday_count == 0:
-            percentage_difference = 0 if today_count == 0 else 100
-        else:
-            percentage_difference = ((today_count - yesterday_count) / yesterday_count) * 100
-        
-        return round(percentage_difference, 2)
-    except Exception as e:
-        print(f"Error calculating percentage difference: {e}")
-        return None
-
-
-def count_all_companies():
-    return db.session.query(Company).count()
-
-def count_companies_registered_on(date):
-    start_date = datetime.combine(date, datetime.min.time())
-    end_date = datetime.combine(date, datetime.max.time())
-
-    return db.session.query(Company).filter(Company.registration_date.between(start_date, end_date)).count()
 
 def get_daily_company_summary():
     today = datetime.utcnow().date()
@@ -619,10 +365,8 @@ def get_data_size_for_company(company_id):
 
     # Include the data size from related tables
     related_tables = [
-        User, Section, Article, AudioBook, Invoice,
-        Subject, Class, Finance, Student, Book, AudioBook,
-        Session, Teacher, Exam, Expense, Folder, Job, Note,
-        MarketingCampaign, Employee, Project
+        User, Article, Invoice,
+        Folder, Job, Note
     ]
 
     for table in related_tables:

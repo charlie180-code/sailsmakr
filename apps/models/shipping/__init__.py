@@ -2,11 +2,7 @@ from ..general.role import Role
 from ..general.user import User
 from ..shipping.authorization import Authorization
 from ..general.article import Article
-from ..general.jobapplication import JobApplication
-from ..general.job import Job
 from ..general.invoice import Invoice
-from ..general.marketingcampaign import MarketingCampaign
-from ..general.marketingcampaigntool import MarketingCampaignTool
 from ..general.project import Project
 from ..general.employee import Employee
 from ..shipping.purchase import Purchase
@@ -15,9 +11,7 @@ from ..general.task import Task
 from ..general.event import Event
 from ..general.note import Note
 from ..general.talk import Talk
-from ..general.doc import Doc
 from ..general.new import New
-from ..general.message import Message
 from ..shipping.product import Product
 from ..general.contact import Contact
 from ..general.subscriber import Subscriber
